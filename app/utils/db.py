@@ -12,10 +12,11 @@ class Database:
 
         self.db = redis.StrictRedis(host=redis_host, port=redis_port)
 
-    # Insert new (key, value) pair
-    def insert(self, key, value):
+    # Insert new (key, value) pair(s)
+    def insert(self, pairs):
         
-        self.db.set(key, value)
+        for key in pairs.keys():
+            self.db.set(key, pairs[key])
 
     # Get value by key
     def get(self, key):
@@ -26,14 +27,21 @@ class Database:
         else:
             return None
     
+    # Get all cached keys
+    def get_all_keys(self):
+        
+        return self.db.keys(pattern="*")
+
     # Clear Cache
     def clear(self):
 
         self.db.flushdb()
 
-    # Delete (key, value) pair
+    # Delete (key, value) pair by key
     def delete(self, keys):
 
-        for key in keys:
-            self.db.delete(key)
-        
+        if type(keys) == list:
+            for key in keys:
+                self.db.delete(key)
+        else:
+            self.db.delete(keys)
