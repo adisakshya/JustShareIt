@@ -13,10 +13,9 @@ class Database:
         self.db = redis.StrictRedis(host=redis_host, port=redis_port)
 
     # Insert new (key, value) pair(s)
-    def insert(self, pairs):
+    def insert(self, key, value):
         
-        for key in pairs.keys():
-            self.db.set(key, pairs[key])
+        self.db.set(key, value)
 
     # Get value by key
     def get(self, key):
