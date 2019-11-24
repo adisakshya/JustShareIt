@@ -29,9 +29,11 @@ class Database:
     # Clear Cache
     def clear(self):
 
-        pass
+        self.db.flushdb()
 
     # Delete (key, value) pair
-    def delete(self):
+    def delete(self, keys):
 
-        pass
+        for key in keys:
+            self.db.delete(key)
+        
