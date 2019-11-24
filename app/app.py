@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory, make_response
+from flask import Flask, send_from_directory, make_response, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 
@@ -101,10 +101,13 @@ class Cache(Resource):
             # Report error
             print("[ERROR] ==>", error)
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
-    
-    # PURGE
+
+# Clear all cached file data
+class ClearCache(Resource):
+
+    # DELETE
     # Clear DB
-    def purge(self):
+    def delete(self):
 
         try:
             
@@ -135,15 +138,22 @@ class Dashboard(Resource):
             # DB Instance
             obj = Database()
 
-            # Clear cached DB
+            # Get all cached files
             keys = obj.get_all_keys()
+            for i in range(len(keys)):
+                keys[i] = keys[i].decode('utf-8')
+
+            # Set isEmpty flag
+            isEmpty = True if not keys else False
 
             # Response Data
             res = {
+                'empty' : isEmpty,
                 'key_list' : keys
             }
 
             # Return response
+            # return isEmpty
             return make_response(jsonify({'success':True, 'error':None, 'message':res}, 200))
         
         except Exception as error:
@@ -173,10 +183,17 @@ class File(Resource):
 
             # Get value by key
             file_path = obj.get(_fileName)
-            
+            if not file_path:
+                res = {
+                    'no_files': True
+                }
+                return make_response(jsonify({'success':True, 'error':None, 'message':res}), 200)
+
             # Send file as attachment
-            return send_from_directory(file_path, filename=_fileName, as_attachment=False)
-            
+            # return make_response(jsonify({'success':True, 'error':None, 'message':{'filename':_fileName, 'path':file_path}}), 200)
+
+            return send_from_directory(file_path, filename=_fileName, as_attachment=True)
+
         except Exception as error:
             
             # Report error
@@ -187,6 +204,7 @@ class File(Resource):
 api.add_resource(Cache, '/api/cache')
 api.add_resource(Dashboard, '/api/dashboard')
 api.add_resource(File, '/api/file')
+api.add_resource(ClearCache, '/api/clear/cache')
 
 if __name__ == "__main__":
     
