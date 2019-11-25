@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Something went wrong !</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+	<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div id="notfound">
+			<div class="notfound">
+				<div class="notfound-404">
+					<h1>Oops!</h1>
+					<h2>Something went wrong !</h2>
+				</div>
+				<a href="/">Go TO Homepage</a>
+			</div>
+		</div>
+		{% if error %}
+		<div class="alert alert-danger">
+			<strong>Encountered Issue:</strong> {{ error }}
+		</div>
+		{% endif %}
+	</div>
+</body>
+</html>
