@@ -16,4 +16,6 @@ WORKDIR /app
 
 COPY . /app
 
+RUN ./set_compose_env.sh 
+
 CMD [ "python3", "app.py" ]

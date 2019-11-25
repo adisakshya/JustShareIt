@@ -8,8 +8,8 @@ services:
     container_name: JustShareIt_api
     volumes: 
       - type: bind
-        source: "//c/Users"
-        target: "/mnt/c/Users"
+        source: ${SOURCE}
+        target: "/JustShareIt_api/data${SOURCE}"
         read_only: True
     environment: 
       PYTHONPATH: .
