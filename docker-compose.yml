@@ -1,11 +1,16 @@
 
-version: "3"
+version: "3.7"
 
 services:
 
   application:
     image: justshareit_application
     container_name: JustShareIt_api
+    volumes: 
+      - type: bind
+        source: "//c/Users"
+        target: "/mnt/c/Users"
+        read_only: True
     environment: 
       PYTHONPATH: .
     ports:
