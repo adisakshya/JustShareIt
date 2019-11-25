@@ -4,7 +4,7 @@ version: "3.7"
 services:
 
   application:
-    image: justshareit_application
+    build: ./app
     container_name: JustShareIt_api
     volumes: 
       - type: bind
