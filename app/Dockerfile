@@ -18,4 +18,4 @@ COPY . /app
 
 RUN ./set_compose_env.sh 
 
-CMD [ "python3", "app.py" ]
+CMD [ "gunicorn", "-b", "0.0.0.0:5000", "app" ]
