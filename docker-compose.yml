@@ -3,14 +3,15 @@ version: "3"
 
 services:
 
-  # application:
-  #   build: ./app
-  #   environment: 
-  #     PYTHONPATH: .
-  #   ports:
-  #     - '5000:5000'
-  #   links:
-  #     - redis
+  application:
+    build: ./app
+    container_name: JustShareIt_api
+    environment: 
+      PYTHONPATH: .
+    ports:
+      - '5000:5000'
+    links:
+      - redis
   
   redis:
     build: ./redis

@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 
 from utils.db import Database
+from utils.pathManipulator import PathManipulator
 
 application = app = Flask(__name__)
 CORS(app)
@@ -174,9 +175,11 @@ class File(Resource):
             # Parse the arguments
             parser = reqparse.RequestParser()
             parser.add_argument('filename', type=str, help='Filename')
+            parser.add_argument('mount_target', type=str, help='Mount Target')
             args = parser.parse_args()
 
             _fileName = args['filename']
+            _mount_target = args['mount_target']
 
             # DB Instance
             obj = Database()
@@ -189,10 +192,13 @@ class File(Resource):
                 }
                 return make_response(jsonify({'success':True, 'error':None, 'message':res}), 200)
 
-            # Send file as attachment
-            # return make_response(jsonify({'success':True, 'error':None, 'message':{'filename':_fileName, 'path':file_path}}), 200)
+            # Manipulate file path
+            manipObj = PathManipulator(_mount_target)
+            file_path = manipObj.path_in_mount(file_path)
 
-            return send_from_directory(file_path, filename=_fileName, as_attachment=True)
+            # Send file as attachment
+            return {'file_path':file_path}
+            # return send_from_directory(file_path, filename=_fileName, as_attachment=True)
 
         except Exception as error:
             
@@ -209,4 +215,6 @@ api.add_resource(ClearCache, '/api/clear/cache')
 if __name__ == "__main__":
     
     port = os.environ.get("PORT", 5000)
-    app.run(debug=True, host="127.0.0.1", port=port)
+    app.run(debug=True, host="0.0.0.0", port=port)
+
+# docker run -d -it --mount type=bind,source="//c/Users/adisa",target="/mnt/c/Users",readonly justshareit_application
