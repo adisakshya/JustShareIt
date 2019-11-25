@@ -4,7 +4,7 @@ version: "3"
 services:
 
   application:
-    build: ./app
+    image: justshareit_application
     container_name: JustShareIt_api
     environment: 
       PYTHONPATH: .
