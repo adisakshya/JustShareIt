@@ -3,6 +3,16 @@ version: "3.7"
 
 services:
 
+  web_server:
+    build: ./webserver
+    container_name: JustShareIt_webserver
+    environment: 
+      PYTHONPATH: .
+    ports:
+      - '5001:5001'
+    links:
+      - application
+  
   application:
     build: ./app
     container_name: JustShareIt_api
