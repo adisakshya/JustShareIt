@@ -34,14 +34,16 @@
         <div id="profile">
           <div class="card card-body mb-3">
             {% if files.number_of_files %}
-              <span class="alert alert-success">Number of files added: {{files.number_of_files}} </span>
+              <span class="alert alert-success">
+                Number of files added: {{files.number_of_files}}
+              </span>
               <ul class="list-group">
                 {% for file in files.file_list %}
                 <li class="list-group-item" style="font-size:18px">
                   {{ file }}
                   <a style="float:right">
                     <form onsubmit="deleteFile('{{ file }}')" method="DELETE">
-                      <button type = "submit" class ="btn btn-primary">
+                      <button type="submit" class="btn btn-light">
                           <i class="fa fa-times-circle fa-2x" style="color:red"></i>
                       </button>
                     </form>
@@ -66,14 +68,11 @@
   function deleteFile(filename) {
     
     alert("Are you sure you want to delete " + filename + " ?");
-    let data = {
-      "filename" : filename
-    }
     var settings = {
-      "async": true,
+      "async": false,
       "crossDomain": true,
       "method": "DELETE",
-      "url": "/?filename="+filename,
+      "url": "/admin/delete?filename="+filename,
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded",
         "cache-control": "no-cache"
@@ -81,8 +80,8 @@
     }
 
     $.ajax(settings).done(function (response) {
-      event.preventDefault();
       console.log(response);
+      return false;
     });
   }
 

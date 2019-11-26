@@ -1,13 +1,13 @@
 import os
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 from util.apiUtil import APIRequest
 
 application = app = Flask(__name__)
 
-# Admin Page
-@app.route("/", methods = ["GET", "POST", "DELETE"])
+# Admin
+@app.route("/", methods = ["GET", "POST"])
 def index():
     
     # Initialize empty file list
@@ -31,27 +31,17 @@ def index():
                                     })
             post_success = response["success"]
             
-            # GET request to API
-            response = obj.get("/dashboard", {})           
-
-            # list of files
-            file_list = response[0]["message"]["key_list"]
-            
-            # Response Variable
-            res = {
-                'post_success' : post_success,
-                'file_list' : file_list,
-                'number_of_files' : len(file_list)
-            }
+            if not post_success:
+                raise ValueError("Failed to add file, POST Response: " + str(response))
 
             # Render index page
-            return render_template("index.html", files=res)
+            return redirect(url_for('index'))
 
         # Report Exception
         except Exception as error:
 
             return render_template("wrong.html", error=error)
-
+    
     # GET
     elif request.method == "GET":
 
@@ -77,9 +67,12 @@ def index():
         except Exception as error:
 
             return render_template("wrong.html", error=error)
-    
+
+@app.route("/admin/delete", methods = ["DELETE"])
+def delete():
+
     # DELETE
-    elif request.method == "DELETE":
+    if request.method == "DELETE":
 
         try:
             
@@ -90,23 +83,17 @@ def index():
             obj = APIRequest()
             response = obj.delete("/cache", {
                 "filename" : filename
-            }) 
-
-            # GET request to API
-            obj = APIRequest()
-            response = obj.get("/dashboard", {}) 
-
-            # list of files
-            file_list = response[0]["message"]["key_list"]
+            })
+            print(response)
+            delete_success = response["success"]
             
-            # Response Variable
-            res = {
-                'file_list' : file_list,
-                'number_of_files' : len(file_list)
-            }
+            # ------------Not working------------
+            if not delete_success:
+                raise ValueError("Failed to delete file, DELETE Response: " + str(response))
+            # -----------------------------------
 
             # Render index page
-            return render_template("index.html", files=res)
+            return redirect(url_for('index'))
 
         # Report Exception
         except Exception as error:
