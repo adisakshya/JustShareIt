@@ -8,8 +8,8 @@ MAC_PATH=""
 
 # Update SOURCE path in .env for docker-compose.yml
 case "$OSTYPE" in
-  darwin*)  echo "SOURCE=$MAC_PATH" > ../.env ;; 
-  linux*)   echo "SOURCE=$UBU_PATH" > ../.env ;;
-  msys*)    echo "SOURCE=$WIN_PATH" > ../.env ;;
+  darwin*)  echo "SOURCE=$MAC_PATH" > ./.env ;; 
+  linux*)   echo "SOURCE=$UBU_PATH" > ./.env ;;
+  msys*)    echo "SOURCE=$WIN_PATH" > ./.env ;;
   *)        export HOST_OS="unknown: $OSTYPE" ;;
 esac

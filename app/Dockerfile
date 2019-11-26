@@ -16,6 +16,4 @@ WORKDIR /app
 
 COPY . /app
 
-RUN ./set_compose_env.sh 
-
 CMD [ "gunicorn", "-b", "0.0.0.0:5000", "app" ]
