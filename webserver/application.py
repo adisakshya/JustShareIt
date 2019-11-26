@@ -7,7 +7,7 @@ from util.apiUtil import APIRequest
 application = app = Flask(__name__)
 
 # Admin Page
-@app.route("/",methods = ["GET", "POST"])
+@app.route("/", methods = ["GET", "POST", "DELETE"])
 def index():
     
     # Initialize empty file list
@@ -53,10 +53,45 @@ def index():
             return render_template("wrong.html", error=error)
 
     # GET
-    else:
+    elif request.method == "GET":
 
         try:
             
+            # GET request to API
+            obj = APIRequest()
+            response = obj.get("/dashboard", {}) 
+
+            # list of files
+            file_list = response[0]["message"]["key_list"]
+            
+            # Response Variable
+            res = {
+                'file_list' : file_list,
+                'number_of_files' : len(file_list)
+            }
+
+            # Render index page
+            return render_template("index.html", files=res)
+
+        # Report Exception
+        except Exception as error:
+
+            return render_template("wrong.html", error=error)
+    
+    # DELETE
+    elif request.method == "DELETE":
+
+        try:
+            
+            # Fetch form data
+            filename = request.args.get('filename')
+            
+            # DELETE request to API
+            obj = APIRequest()
+            response = obj.delete("/cache", {
+                "filename" : filename
+            }) 
+
             # GET request to API
             obj = APIRequest()
             response = obj.get("/dashboard", {}) 
