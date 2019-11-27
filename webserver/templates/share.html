@@ -1,520 +1,108 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <title>JustShareIt | adisakshya</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  </head>
-  <body>
-      
-      <div class="row">
-        <h1>JustShareIt!</h1>
-      </div>
-      
-      <hr>
-      
-      <div class="row">
-        <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>JustShareIt | Dashboard</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content"><nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+    <div class="container-fluid">
+        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="bg-light form-control border-0 small" placeholder="Search for ..." />
+                <div class="input-group-append">
+                    <button class="btn btn-primary py-0" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
-          </div>
+        </form>
+        <ul class="nav navbar-nav flex-nowrap ml-auto">
+            <div class="d-none d-sm-block topbar-divider"></div>
+            <li class="nav-item dropdown no-arrow">
+                <div class="nav-item">
+                    <div class="nav-link"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Adisakshya Chauhan</span>
+                        <img class="border rounded-circle img-profile" src="../static/img/avatar2.jpeg" /></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Download All</a></div><div class="row">
+    <div class="col-md-6 col-xl-2 mb-4">
+        <div class="card shadow border-left-primary py-2">
+            <div class="card-body">
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>12 MB</span></div>
+                        <div class="text-dark font-weight-bold h5 mb-0"><span>Filename 1</span></div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                </div>
+            </div>
         </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
+    </div>
+    <div class="col-md-6 col-xl-2 mb-4">
+        <div class="card shadow border-left-success py-2">
+            <div class="card-body">
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>5 MB</span></div>
+                        <div class="text-dark font-weight-bold h5 mb-0"><span>Filename 2</span></div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
+    </div>
+    <div class="col-md-6 col-xl-2 mb-4">
+        <div class="card shadow border-left-info py-2">
+            <div class="card-body">
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>6 MB</span></div>
+                        <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>Filename 3</span></div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col col-md-5">
-            <div class="card">
-              <div class="card-header">8:15 PM</div>
-              <div class="card-main">
-                <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-                <div class="main-description" style="padding-top:10px;">Image</div>
-              </div>
+    </div>
+    <div class="col-md-6 col-xl-2 mb-4">
+        <div class="card shadow border-left-warning py-2">
+            <div class="card-body">
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>9 MB</span></div>
+                        <div class="text-dark font-weight-bold h5 mb-0"><span>Filename 4</span></div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
+                </div>
             </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="or-border">
-              <div class="card-header" id="or-header">Bike</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-                <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="red-border">
-              <div class="card-header" id="red-header">Morning</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-                <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
         </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
+    </div>
+</div></div>
             </div>
-          </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © Adisakshya Chauhan 2019-2020</span></div>
+                </div>
+            </footer>
         </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-            <div class="card">
-              <div class="card-header">8:15 PM</div>
-              <div class="card-main">
-                <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-                <div class="main-description" style="padding-top:10px;">Image</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="or-border">
-              <div class="card-header" id="or-header">Bike</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-                <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="red-border">
-              <div class="card-header" id="red-header">Morning</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-                <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-            <div class="card">
-              <div class="card-header">8:15 PM</div>
-              <div class="card-main">
-                <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-                <div class="main-description" style="padding-top:10px;">Image</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="or-border">
-              <div class="card-header" id="or-header">Bike</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-                <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="red-border">
-              <div class="card-header" id="red-header">Morning</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-                <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-            <div class="card">
-              <div class="card-header">8:15 PM</div>
-              <div class="card-main">
-                <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-                <div class="main-description" style="padding-top:10px;">Image</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="or-border">
-              <div class="card-header" id="or-header">Bike</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-                <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="red-border">
-              <div class="card-header" id="red-header">Morning</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-                <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-            <div class="card">
-              <div class="card-header">8:15 PM</div>
-              <div class="card-main">
-                <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-                <div class="main-description" style="padding-top:10px;">Image</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="or-border">
-              <div class="card-header" id="or-header">Bike</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-                <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="red-border">
-              <div class="card-header" id="red-header">Morning</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-                <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-            <div class="card">
-              <div class="card-header">8:15 PM</div>
-              <div class="card-main">
-                <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-                <div class="main-description" style="padding-top:10px;">Image</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="or-border">
-              <div class="card-header" id="or-header">Bike</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-                <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-            <div class="card" id="red-border">
-              <div class="card-header" id="red-header">Morning</div>
-              <div class="card-main">
-                <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-                <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-md-5">
-          <div class="card">
-            <div class="card-header">8:15 PM</div>
-            <div class="card-main">
-              <i class="fa fa-file-image-o fa-2x" style="color:#0097A7"></i>
-              <div class="main-description" style="padding-top:10px;">Image</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="or-border">
-            <div class="card-header" id="or-header">Bike</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="or-color"></i>
-              <div class="main-description" id="or-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-md-5">
-          <div class="card" id="red-border">
-            <div class="card-header" id="red-header">Morning</div>
-            <div class="card-main">
-              <i class="fa fa-file-pdf-o fa-2x" id="red-color"></i>
-              <div class="main-description" id="red-color" style="padding-top:10px;">PDF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </body>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+</div>
+</body>
+
 </html>
