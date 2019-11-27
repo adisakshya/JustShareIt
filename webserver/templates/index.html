@@ -22,7 +22,7 @@
             <p class="lead">
               Provide filename and filepath to share!
             </p>
-            <form action="/" method="post">
+            <form action="/JustShareIt/dashboard/admin" method="post">
                 <input type="text" name="filename" class = "form-control" placeholder="File Name">
                 <br>
                 <input type="text" name="filepath" class = "form-control" placeholder="File Path">
@@ -72,7 +72,7 @@
       "async": false,
       "crossDomain": true,
       "method": "DELETE",
-      "url": "/admin/delete?filename="+filename,
+      "url": "/JustShareIt/admin/delete/file?filename="+filename,
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded",
         "cache-control": "no-cache"

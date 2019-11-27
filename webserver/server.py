@@ -7,7 +7,7 @@ from util.apiUtil import APIRequest
 application = app = Flask(__name__)
 
 # Admin
-@app.route("/", methods = ["GET", "POST"])
+@app.route("/JustShareIt/dashboard/admin", methods = ["GET", "POST"])
 def index():
     
     # Initialize empty file list
@@ -68,7 +68,7 @@ def index():
 
             return render_template("wrong.html", error=error)
 
-@app.route("/admin/delete", methods = ["DELETE"])
+@app.route("/JustShareIt/admin/delete/file", methods = ["DELETE"])
 def delete():
 
     # DELETE
@@ -101,7 +101,7 @@ def delete():
             return render_template("wrong.html", error=error)
 
 # Client
-@app.route("/client/share", methods = ["GET"])
+@app.route("/JustShareIt/client/share", methods = ["GET"])
 def share_file():
 
     # DELETE
