@@ -13,7 +13,10 @@ class APIRequest:
     def get(self, url, querystring):
 
         response = requests.request("GET", self.BASE_URL + url, headers=self.headers, params=querystring)
-        return response.json()
+        try:
+            return response.json()
+        except:
+            return response
     
     def post(self, url, querystring):
 
