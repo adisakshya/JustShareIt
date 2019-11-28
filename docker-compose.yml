@@ -6,21 +6,22 @@ services:
   web_server:
     build: ./webserver
     container_name: JustShareIt_webserver
+    volumes:
+      - type: bind
+        source: ${SOURCE}
+        target: "/JustShareIt/data${SOURCE}"
+        read_only: True
     environment: 
       PYTHONPATH: .
     ports:
       - '5001:5001'
     links:
       - application
-  
+      - redis
+
   application:
     build: ./app
     container_name: JustShareIt_api
-    volumes: 
-      - type: bind
-        source: ${SOURCE}
-        target: "/JustShareIt_api/data${SOURCE}"
-        read_only: True
     environment: 
       PYTHONPATH: .
     ports:

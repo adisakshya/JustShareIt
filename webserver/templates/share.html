@@ -57,11 +57,9 @@
                         <div class="col mr-2">
                             <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>12 MB</span></div>
                             <div class="text-dark font-weight-bold h5 mb-0">
-                                <form onsubmit="downloadFile('{{ file }}')" method="GET">
-                                    <button type="submit" class="btn btn-light">
-                                        <span>{{ file }}</span>
-                                    </button>
-                                </form>
+                                <a href="http://192.168.99.100:5001/JustShareIt/client/share?filename={{file}}">
+                                    <span>{{ file }}</span>
+                                </a>
                             </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
@@ -137,10 +135,10 @@
         a.href = dataurl;
         a.setAttribute("download", filename);
         a.click();
-        return false;
+        // return false;
     }
 
-    download("http://loaclhost:5001/JustShareIt/client/share?filename=", filename);
+    download("http://192.168.99.100:5001/JustShareIt/client/share?filename=", filename);
 }
 
 </script>

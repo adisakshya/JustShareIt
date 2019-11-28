@@ -4,7 +4,6 @@ from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 
 from utils.db import Database
-from utils.pathManipulator import PathManipulator
 
 application = app = Flask(__name__)
 CORS(app)
@@ -163,52 +162,9 @@ class Dashboard(Resource):
             print("[ERROR] ==>", error)
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
-# File Sharing
-class File(Resource):
-
-    # GET
-    # Return all cached filenames
-    def get(self):
-
-        try:
-            
-            # Parse the arguments
-            parser = reqparse.RequestParser()
-            parser.add_argument('filename', type=str, help='Filename')
-            parser.add_argument('mount_target', type=str, help='Mount Target')
-            args = parser.parse_args()
-
-            _fileName = args['filename']
-            _mount_target = args['mount_target']
-
-            # DB Instance
-            obj = Database()
-
-            # Get value by key
-            file_path = obj.get(_fileName)
-            if not file_path:
-                res = {
-                    'no_files': True
-                }
-                return make_response(jsonify({'success':True, 'error':None, 'message':res}), 200)
-
-            # Manipulate file path
-            manipObj = PathManipulator(_mount_target)
-            file_path = manipObj.path_in_mount(file_path)
-
-            # Send file as attachment
-            return send_from_directory(file_path, filename=_fileName, as_attachment=True)
-
-        except Exception as error:
-            
-            # Report error
-            print("[ERROR] ==>", error)
-            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
-
 # API Resources
 api.add_resource(Cache, '/api/cache')
 api.add_resource(Dashboard, '/api/dashboard')
-api.add_resource(File, '/api/file')
 api.add_resource(ClearCache, '/api/clear/cache')
 
 if __name__ == "__main__":

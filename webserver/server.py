@@ -1,8 +1,10 @@
 import os
 import requests
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, send_from_directory
 
-from util.apiUtil import APIRequest
+from utils.apiUtil import APIRequest
+from utils.db import Database
+from utils.pathManipulator import PathManipulator
 
 application = app = Flask(__name__)
 
@@ -141,28 +143,24 @@ def share_file():
             # Fetch form data
             filename = request.args.get('filename')
             
-            # GET request to API
-            obj = APIRequest()
-            response = obj.get("/cache", {
-                "filename" : filename
-            })
+            # DB Instance
+            obj = Database()
 
-            get_success = response["success"]
-            
-            if not get_success:
-                raise ValueError("Failed to fetch file, GET Response: " + str(response))
-            
-            # GET request to API
-            response = obj.get("/file", {
-                "filename" : filename,
-                "mount_target" : "JustShareIt_api/data"
-            })
+            # Get value by key
+            file_path = obj.get(filename)
+            if not file_path:
+                res = {
+                    'no_files': True
+                }
+                return res#render_template("share.html", response={'success':True, 'error':None, 'message':res})
 
-            # Return shared file
-            res = make_response('file')
-            res.headers['Content-Type'] = response.headers['Content-Type']
-            res.headers['Content-Disposition'] = response.headers['Content-Disposition']
-            return res
+            # Manipulate file path
+            manipObj = PathManipulator("JustShareIt/data")
+            file_path = manipObj.path_in_mount(file_path)
+
+            # Send file as attachment
+            # return {"filename":filename, "path":file_path}
+            return send_from_directory(file_path, filename=filename, as_attachment=True)
 
         # Report Exception
         except Exception as error:
