@@ -101,6 +101,35 @@ def delete():
             return render_template("wrong.html", error=error)
 
 # Client
+@app.route("/JustShareIt/dashboard", methods = ["GET"])
+def user_dashboard():
+
+    # DELETE
+    if request.method == "GET":
+
+        try:
+            
+            # GET request to API
+            obj = APIRequest()
+            response = obj.get("/dashboard", {}) 
+
+            # list of files
+            file_list = response[0]["message"]["key_list"]
+            
+            # Response Variable
+            res = {
+                'file_list' : file_list,
+                'number_of_files' : len(file_list)
+            }
+
+            # Render index page
+            return render_template("share.html", files=res, admin_name="Adisakshya Chauhan")
+
+        # Report Exception
+        except Exception as error:
+
+            return render_template("wrong.html", error=error)
+
 @app.route("/JustShareIt/client/share", methods = ["GET"])
 def share_file():
 
