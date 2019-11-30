@@ -1,5 +1,11 @@
 # !/bin/sh
 
+# Command line arguments
+while [[ "$#" -gt 0 ]]; do case $1 in
+  -i|--interactive) interactive_mode=1;;
+  *) echo "Unknown parameter passed: $1"; exit 1;;
+esac; shift; done
+
 # JustShareIt! v1.0
 init() {
 
@@ -38,7 +44,21 @@ compose() {
 
     # Docker-Compose
     echo "[INFO] ==> Getting things ready to JustShareIt!"
-    docker-compose up --build
+    
+    if [ $interactive_mode ]
+    then
+        echo "[INFO] ==> Running in Interactive Mode"
+        echo "[INFO] ==> Use KEYBOARD_INTERRUPT to shutdown"
+        docker-compose up --build
+
+        echo "[INFO] ==> Cleaning up"
+        docker-compose down
+        echo "[INFO] ==> Shutdown Successful"
+    else
+        echo "[INFO] ==> Running in Detach Mode"
+        echo "[INFO] ==> Use stop command to shutdown"
+        docker-compose up -d --build
+    fi
 
 }
 
