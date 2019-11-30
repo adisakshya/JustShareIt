@@ -2,12 +2,16 @@
 import pyqrcode 
 from pyqrcode import QRCode 
 
+class GenerateQRCode:
 
-# String which represent the QR code 
-s = "http://192.168.99.100/JustShareIt/dashboard"
+    def __init__(self):
 
-# Generate QR code 
-url = pyqrcode.create(s) 
+        pass
 
-# Create and save the png file naming "myqr.png" 
-url.svg("../static/img/qrcode/qr.svg", scale = 8) 
+    def store_code(self, url):
+
+        # Generate QR code 
+        qrcode = pyqrcode.create(url)
+        
+        # Create and save the png file naming "myqr.png" 
+        qrcode.svg("../static/img/qrcode/qr.svg", scale = 10)
