@@ -68,45 +68,6 @@
             </div>
         </div>
         {% endfor %}
-    <!-- <div class="col-md-6 col-xl-2 mb-4">
-        <div class="card shadow border-left-success py-2">
-            <div class="card-body">
-                <div class="row align-items-center no-gutters">
-                    <div class="col mr-2">
-                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>5 MB</span></div>
-                        <div class="text-dark font-weight-bold h5 mb-0"><span>Filename 2</span></div>
-                    </div>
-                    <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xl-2 mb-4">
-        <div class="card shadow border-left-info py-2">
-            <div class="card-body">
-                <div class="row align-items-center no-gutters">
-                    <div class="col mr-2">
-                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>6 MB</span></div>
-                        <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>Filename 3</span></div>
-                    </div>
-                    <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xl-2 mb-4">
-        <div class="card shadow border-left-warning py-2">
-            <div class="card-body">
-                <div class="row align-items-center no-gutters">
-                    <div class="col mr-2">
-                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>9 MB</span></div>
-                        <div class="text-dark font-weight-bold h5 mb-0"><span>Filename 4</span></div>
-                    </div>
-                    <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 {% else %}
     <h2>Nothing to show here!</h2>
@@ -125,24 +86,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script>
-
-  function downloadFile(filename) {
-    
-    alert("Are you sure you want to download " + filename + " ?");
-    function download(dataurl, filename) {
-        var a = document.createElement("a");
-        a.href = dataurl;
-        a.setAttribute("download", filename);
-        a.click();
-        // return false;
-    }
-
-    download("http://192.168.99.100:5001/JustShareIt/client/share?filename=", filename);
-}
-
-</script>
-
 </body>
 
 </html>
