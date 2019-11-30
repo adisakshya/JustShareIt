@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 from utils.apiUtil import APIRequest
 from utils.db import Database
 from utils.pathManipulator import PathManipulator
+from utils.qrcode import GenerateQRCode
 
 application = app = Flask(__name__)
 
@@ -62,8 +63,13 @@ def index():
                 'number_of_files' : len(file_list)
             }
 
+            # Generate QRCode
+            if not os.path.isfile("../static/img/qrcode/qr.svg"):
+                qrcode = GenerateQRCode()
+                qrcode.store_code("http://" + request.host + "/JustShareIt/dashboard")
+
             # Render index page
-            return render_template("index.html", files=res)
+            return render_template("index.html", files=res, qr_code_address="http://" + request.host + "/JustShareIt/dashboard")
 
         # Report Exception
         except Exception as error:

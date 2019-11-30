@@ -8,6 +8,7 @@ itsdangerous==1.1.0
 Jinja2==2.10.1
 MarkupSafe==1.1.1
 pip==19.1.1
+PyQRCode==1.2.1
 redis==3.3.11
 requests==2.22.0
 setuptools==41.0.1

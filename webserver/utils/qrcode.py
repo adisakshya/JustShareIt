@@ -14,4 +14,4 @@ class GenerateQRCode:
         qrcode = pyqrcode.create(url)
         
         # Create and save the png file naming "myqr.png" 
-        qrcode.svg("../static/img/qrcode/qr.svg", scale = 10)
+        qrcode.svg("./static/img/qrcode/qr.svg", scale = 10)

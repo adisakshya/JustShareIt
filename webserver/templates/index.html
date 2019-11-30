@@ -10,10 +10,32 @@
     <title>JustShareIt!</title>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-col mb-3">
+    <nav class="navbar navbar-light mb-3">
         <div class="container">
-            
-            <a href="/" class = "navbar-brand">JustShareIt</a>
+            <div class="navbar-brand" style="font-size: 25px; font-weight: 600;">JustShareIt</div>
+            <div class="row" style="padding:0;padding-bottom:10px;padding-top:20px;">
+              <div class="col">
+                  <div>
+                      <a class="btn btn-primary" role="button" data-toggle="modal" href="#myModal" style="border-radius: 0;">
+                        Share with mobile devices
+                      </a>
+                      <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
+                          <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                  <div class="modal-body" style="padding:0; text-align: center;">
+                                      {% if qr_code_address %}
+                                        <img src="{{ url_for('static', filename='img/qrcode/qr.svg') }}">
+                                        <p>{{ qr_code_address }}</p>
+                                      {% else %}
+                                        <p>Failed to load QRCode</p>
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
     </nav>
     <div class="container searchContainer">
@@ -61,7 +83,6 @@
     </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
 
