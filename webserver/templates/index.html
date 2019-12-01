@@ -84,28 +84,6 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script>
-
-  function deleteFile(filename) {
-    
-    alert("Are you sure you want to delete " + filename + " ?");
-    var settings = {
-      "async": false,
-      "crossDomain": true,
-      "method": "DELETE",
-      "url": "/JustShareIt/admin/delete/file?filename="+filename,
-      "headers": {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache"
-      }
-    }
-
-    $.ajax(settings).done(function (response) {
-      console.log(response);
-      return false;
-    });
-  }
-
-</script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
