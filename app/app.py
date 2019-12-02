@@ -11,8 +11,14 @@ api = Api(app)
 
 # API
 
-# Cache Management
-class Cache(Resource):
+# File Cache Management
+class FileCache(Resource):
+
+    # Constructor
+    def __init__(self):
+        
+        # DB Instance
+        self.dbObj = Database()
 
     # GET
     # Returns cached files
@@ -26,13 +32,10 @@ class Cache(Resource):
             args = parser.parse_args()
 
             _fileName = args['filename']
-            
-            # DB Instance
-            obj = Database()
 
             # Get value by key from cache
             value = {
-                'path': obj.get(_fileName)
+                'path': self.dbObj.get(_fileName)
             }
 
             # Return response
@@ -59,11 +62,8 @@ class Cache(Resource):
             _fileName = args['filename']
             _path = args['path']
             
-            # DB Instance
-            obj = Database()
-
             # Cache file
-            obj.insert(_fileName, _path)
+            self.dbObj.insert(_fileName, _path)
 
             # Return response
             return make_response(jsonify({'success':True, 'error':None, 'message':{'filename' : _fileName}}), 200)
@@ -87,11 +87,8 @@ class Cache(Resource):
 
             _fileName = args['filename']
             
-            # DB Instance
-            obj = Database()
-
             # Delete cached file
-            obj.delete(_fileName)
+            self.dbObj.delete(_fileName)
 
             # Return response
             return make_response(jsonify({'success':True, 'error':None, 'message':{'filename' : _fileName}}), 200)
@@ -105,17 +102,20 @@ class Cache(Resource):
 # Clear all cached file data
 class ClearCache(Resource):
 
+    # Constructor
+    def __init__(self):
+        
+        # DB Instance
+        self.dbObj = Database()
+    
     # DELETE
     # Clear DB
     def delete(self):
 
         try:
             
-            # DB Instance
-            obj = Database()
-
             # Clear cached DB
-            obj.clear()
+            self.dbObj.clear()
 
             # Return response
             return make_response(jsonify({'success':True, 'error':None, 'message':None}, 200))
@@ -129,17 +129,20 @@ class ClearCache(Resource):
 # Client/Admin Dashboard
 class Dashboard(Resource):
 
+    # Constructor
+    def __init__(self):
+        
+        # DB Instance
+        self.dbObj = Database()
+    
     # GET
     # Return all cached filenames
     def get(self):
 
         try:
             
-            # DB Instance
-            obj = Database()
-
             # Get all cached files
-            keys = obj.get_all_keys()
+            keys = self.dbObj.get_all_keys()
             for i in range(len(keys)):
                 keys[i] = keys[i].decode('utf-8')
 
@@ -163,7 +166,7 @@ class Dashboard(Resource):
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
 # API Resources
-api.add_resource(Cache, '/api/cache')
+api.add_resource(FileCache, '/api/cache')
 api.add_resource(Dashboard, '/api/dashboard')
 api.add_resource(ClearCache, '/api/clear/cache')
 
