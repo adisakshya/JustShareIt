@@ -165,10 +165,164 @@ class Dashboard(Resource):
             print("[ERROR] ==>", error)
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
+# User Request Handler
+class UserRequests(Resource):
+
+    # Constructor
+    def __init__(self):
+        
+        # DB Instance
+        self.dbObj = Database(index=1)
+    
+    # GET
+    # Returns cached files
+    def get(self):
+
+        try:
+            
+            # Parse the arguments
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str, help='Username')
+            args = parser.parse_args()
+
+            _username = args['username']
+
+            # Get value by key from cache
+            value = {
+                'access': self.dbObj.get(_username)
+            }
+
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':value}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+    
+    # POST
+    # Cache new file
+    def post(self):
+
+        try:
+            
+            # Parse the arguments
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str, help='Username')
+            args = parser.parse_args()
+
+            _username = args['username']
+            _access = 0
+
+            # Cache file
+            self.dbObj.insert(_username, _access)
+
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':{'username' : _username}}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+    
+    # PUT
+    # Cache new file
+    def put(self):
+
+        try:
+            
+            # Parse the arguments
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str, help='Username')
+            args = parser.parse_args()
+
+            _username = args['username']
+            _access = 1
+
+            # Cache file
+            self.dbObj.insert(_username, _access)
+
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':{'username' : _username}}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+
+    # DELETE
+    # Delete cached file
+    def delete(self):
+
+        try:
+            
+            # Parse the arguments
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str, help='Username')
+            args = parser.parse_args()
+
+            _username = args['username']
+            
+            # Delete cached file
+            self.dbObj.delete(_username)
+
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':{'username' : _username}}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+
+# Request Notifications Handler
+class RequestNotification(Resource):
+
+    # Constructor
+    def __init__(self):
+        
+        # DB Instance
+        self.dbObj = Database(index=1)
+    
+    # GET
+    # Return all cached filenames
+    def get(self):
+
+        try:
+            
+            # Get all cached files
+            keys = self.dbObj.get_all_keys()
+            for i in range(len(keys)):
+                keys[i] = keys[i].decode('utf-8')
+
+            # Set isEmpty flag
+            isEmpty = True if not keys else False
+
+            # Response Data
+            res = {
+                'empty' : isEmpty,
+                'key_list' : keys
+            }
+
+            # Return response
+            # return isEmpty
+            return make_response(jsonify({'success':True, 'error':None, 'message':res}, 200))
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+
 # API Resources
 api.add_resource(FileCache, '/api/cache')
 api.add_resource(Dashboard, '/api/dashboard')
 api.add_resource(ClearCache, '/api/clear/cache')
+api.add_resource(UserRequests, '/api/user/request')
+api.add_resource(RequestNotification, '/api/user/request/all')
 
 if __name__ == "__main__":
     
