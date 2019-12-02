@@ -5,12 +5,12 @@ import redis
 class Database:
 
     # Constructor
-    def __init__(self):
+    def __init__(self, index=0):
 
         redis_host = os.environ.get('REDIS_HOST', '192.168.99.100')
         redis_port = os.environ.get('REDIS_PORT', 6379)
 
-        self.db = redis.StrictRedis(host=redis_host, port=redis_port)
+        self.db = redis.StrictRedis(host=redis_host, port=redis_port, db=index)
 
     # Insert new (key, value) pair(s)
     def insert(self, key, value):
