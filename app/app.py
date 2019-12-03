@@ -175,7 +175,7 @@ class UserRequests(Resource):
         self.dbObj = Database(index=1)
     
     # GET
-    # Returns cached files
+    # Returns user access flag
     def get(self):
 
         try:
@@ -202,7 +202,7 @@ class UserRequests(Resource):
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
     
     # POST
-    # Cache new file
+    # Cache new user
     def post(self):
 
         try:
@@ -215,7 +215,7 @@ class UserRequests(Resource):
             _username = args['username']
             _access = 0
 
-            # Cache file
+            # Cache user
             self.dbObj.insert(_username, _access)
 
             # Return response
@@ -228,7 +228,7 @@ class UserRequests(Resource):
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
     
     # PUT
-    # Cache new file
+    # Update user cache
     def put(self):
 
         try:
@@ -241,7 +241,7 @@ class UserRequests(Resource):
             _username = args['username']
             _access = 1
 
-            # Cache file
+            # Update cache
             self.dbObj.insert(_username, _access)
 
             # Return response
@@ -254,7 +254,7 @@ class UserRequests(Resource):
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
     # DELETE
-    # Delete cached file
+    # Delete cached user
     def delete(self):
 
         try:
@@ -266,7 +266,7 @@ class UserRequests(Resource):
 
             _username = args['username']
             
-            # Delete cached file
+            # Delete cached user
             self.dbObj.delete(_username)
 
             # Return response
@@ -288,7 +288,7 @@ class RequestNotification(Resource):
         self.dbObj = Database(index=1)
     
     # GET
-    # Return all cached filenames
+    # Return all cached users
     def get(self):
 
         try:
@@ -319,7 +319,6 @@ class RequestNotification(Resource):
             }
 
             # Return response
-            # return isEmpty
             return make_response(jsonify({'success':True, 'error':None, 'message':res}, 200))
         
         except Exception as error:

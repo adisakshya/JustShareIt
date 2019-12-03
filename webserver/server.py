@@ -10,6 +10,8 @@ from utils.qrcode import GenerateQRCode
 application = app = Flask(__name__)
 
 # Admin
+
+# Dashboard
 @app.route("/JustShareIt/dashboard/admin", methods = ["GET", "POST"])
 def index():
     
@@ -83,6 +85,7 @@ def index():
 
             return render_template("wrong.html", error=error)
 
+# Approve user request
 @app.route("/JustShareIt/user/approve", methods = ["PUT"])
 def approve():
 
@@ -90,7 +93,7 @@ def approve():
 
         try:
 
-            # Fetch form data
+            # Fetch passed parameters
             username = request.args.get('username')
             
             # PUT request to API
@@ -103,12 +106,15 @@ def approve():
             if not success:
                 raise ValueError("Failed to approve user, PUT Response: " + str(response))
             
+            # Make Response
             return make_response(jsonify({'success':True, 'error':None, 'message':username}), 200)
         
+        # Report Exception
         except Exception as error:
             
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
+# Reject user request
 @app.route("/JustShareIt/user/reject", methods = ["DELETE"])
 def reject():
 
@@ -116,10 +122,10 @@ def reject():
 
         try:
 
-            # Fetch form data
+            # Fetch passed parameters
             username = request.args.get('username')
             
-            # PUT request to API
+            # DELETE request to API
             obj = APIRequest()
             response = obj.delete("/user/request", {
                 "username" : username
@@ -129,20 +135,58 @@ def reject():
             if not success:
                 raise ValueError("Failed to delete user, DELETE Response: " + str(response))
             
+            # Make response
             return make_response(jsonify({'success':True, 'error':None, 'message':username}), 200)
         
+        # Report Exception
         except Exception as error:
             
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
+# Remove added file
+@app.route("/JustShareIt/admin/delete/file", methods = ["DELETE"])
+def delete():
+
+    # DELETE
+    if request.method == "DELETE":
+
+        try:
+            
+            # Fetch passed arguments
+            filename = request.args.get('filename')
+            
+            # DELETE request to API
+            obj = APIRequest()
+            response = obj.delete("/cache", {
+                "filename" : filename
+            })
+            delete_success = response["success"]
+            
+            # ------------Not working------------
+            if not delete_success:
+                raise ValueError("Failed to delete file, DELETE Response: " + str(response))
+            # -----------------------------------
+
+            # Render index page
+            return redirect(url_for('index'))
+
+        # Report Exception
+        except Exception as error:
+
+            return render_template("wrong.html", error=error)
+
+# Client
+
+# Client Landing Page
 @app.route("/JustShareIt", methods = ["GET", "POST"])
 def client_login():
 
+    # GET
     if request.method == "GET":
 
         try:
             
-            # Fetch form data
+            # Fetch passed parameters
             username = request.args.get("username")
             
             # If username provided
@@ -154,19 +198,25 @@ def client_login():
                     "username" : username
                 })
 
+                # If user is approved
                 if response["message"]["access"] == "1":
                     return redirect(url_for("user_dashboard"))
+                # elif user is not approved
                 elif response["message"]["access"] == "0":
                     return render_template("client_login.html", requested=True)      
+                # else user hasn't requested
                 else:
                     return render_template("client_login.html", clear_cookie=True)                    
 
+            # Render client login page
             return render_template("client_login.html", requested=False, error=False)
         
+        # Report Exception
         except Exception as error:
             
             return render_template("wrong.html", error=error)
 
+    # POST
     elif request.method == "POST":
 
         try:
@@ -184,50 +234,20 @@ def client_login():
             if not success:
                 raise ValueError("Failed to submit request for user, POST Response: " + str(response))
             
+            
+            # Render client login page
             return render_template("client_login.html", requested=True, error=False)
-            #make_response(jsonify({'success':True, 'error':None, 'message':username}), 200)
         
+        # Report Exception
         except Exception as error:
             
             return render_template("client_login.html", requested=False, error=error)
 
-@app.route("/JustShareIt/admin/delete/file", methods = ["DELETE"])
-def delete():
-
-    # DELETE
-    if request.method == "DELETE":
-
-        try:
-            
-            # Fetch form data
-            filename = request.args.get('filename')
-            
-            # DELETE request to API
-            obj = APIRequest()
-            response = obj.delete("/cache", {
-                "filename" : filename
-            })
-            print(response)
-            delete_success = response["success"]
-            
-            # ------------Not working------------
-            if not delete_success:
-                raise ValueError("Failed to delete file, DELETE Response: " + str(response))
-            # -----------------------------------
-
-            # Render index page
-            return redirect(url_for('index'))
-
-        # Report Exception
-        except Exception as error:
-
-            return render_template("wrong.html", error=error)
-
-# Client
+# File sharing dashboard
 @app.route("/JustShareIt/dashboard", methods = ["GET"])
 def user_dashboard():
 
-    # DELETE
+    # GET
     if request.method == "GET":
 
         try:
@@ -253,15 +273,16 @@ def user_dashboard():
 
             return render_template("wrong.html", error=error)
 
+# Share File
 @app.route("/JustShareIt/client/share", methods = ["GET"])
 def share_file():
 
-    # DELETE
+    # GET
     if request.method == "GET":
 
         try:
             
-            # Fetch form data
+            # Fetch passed parameters
             filename = request.args.get('filename')
             
             # DB Instance
@@ -273,14 +294,13 @@ def share_file():
                 res = {
                     'no_files': True
                 }
-                return res#render_template("share.html", response={'success':True, 'error':None, 'message':res})
+                return res
 
             # Manipulate file path
             manipObj = PathManipulator("JustShareIt/data")
             file_path = manipObj.path_in_mount(file_path)
 
             # Send file as attachment
-            # return {"filename":filename, "path":file_path}
             return send_from_directory(file_path, filename=filename, as_attachment=True)
 
         # Report Exception
