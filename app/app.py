@@ -301,10 +301,21 @@ class RequestNotification(Resource):
             # Set isEmpty flag
             isEmpty = True if not keys else False
 
+            approved_users = []
+            waiting_users = []
+            if not isEmpty:
+                for key in keys:
+                    flag = self.dbObj.get(key)
+                    if int(flag):
+                        approved_users.append(key)
+                    else:
+                        waiting_users.append(key)
+
             # Response Data
             res = {
                 'empty' : isEmpty,
-                'key_list' : keys
+                'approved' : approved_users,
+                "waiting" : waiting_users
             }
 
             # Return response

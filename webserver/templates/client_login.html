@@ -23,19 +23,29 @@
         <div class="row" style="padding:0;padding-bottom:10px;padding-top:20px;">
             <div class="col">
                 <div>
-                    <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" href="#myModal">JustShareIt</a>
+                    {% if requested %}
+                        <a class="btn btn-info btn-lg" role="button" data-toggle="modal" href="#" id="access_granted">Access Requested</a>
+                        <p>You will be redirected to dashboard, once admin approves your request!</p>
+                    {% else %}
+                        <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" href="#myModal">JustShareIt</a>
+                    {% endif %}
+                    {% if clear_cookie %}
+                        <script>
+                            document.cookie="JustShareItUsername=;expires=Thu; 01 Jan 1970";
+                        </script>
+                    {% endif %}
                     <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body" style="padding:0">
                                     <div class="login-clean">
-                                        <form method="POST">
+                                        <form method="POST" id="request_form">
                                             <h2 class="sr-only">Login Form</h2>
                                             <div class="illustration">
                                                 <i class="icon ion-ios-navigate"></i>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" type="password" name="pin" placeholder="Enter Passcode" />
+                                                <input id="username" class="form-control" type="text" name="username" placeholder="Enter Username" />
                                             </div>
                                             <button class="btn btn-primary btn-block" type="submit">Log In</button>
                                         </form>
@@ -51,6 +61,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/client.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cookie.js') }}"></script>
 </body>
 
 </html>

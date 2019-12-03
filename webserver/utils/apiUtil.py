@@ -23,6 +23,11 @@ class APIRequest:
         response = requests.request("POST", self.BASE_URL + url, headers=self.headers, params=querystring)
         return response.json()
     
+    def put(self, url, querystring):
+
+        response = requests.request("PUT", self.BASE_URL + url, headers=self.headers, params=querystring)
+        return response.json()
+
     def delete(self, url, querystring):
 
         response = requests.request("DELETE", self.BASE_URL + url, headers=self.headers, params=querystring)
