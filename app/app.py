@@ -1,12 +1,24 @@
 import os
+import hashlib, uuid
 from flask import Flask, send_from_directory, make_response, jsonify
 from flask_restful import Resource, Api, reqparse
+from flaskext.mysql import MySQL
 from flask_cors import CORS
 
 from utils.db import Database
 
+mysql = MySQL()
 application = app = Flask(__name__)
 CORS(app)
+
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'JustShareIt'
+app.config['MYSQL_DATABASE_HOST'] = 'JustShareIt_db'
+
+
+mysql.init_app(app)
 api = Api(app)
 
 # API
@@ -327,12 +339,80 @@ class RequestNotification(Resource):
             print("[ERROR] ==>", error)
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
 
+# DB Handler
+class MySQL(Resource):
+
+    # GET
+    def get(self):
+
+        try:
+            
+            # Establish Connection
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            # Execute Query
+            sql = "select password from admin"
+            cursor.execute(sql)
+            
+            # Fetch rows
+            rows = cursor.fetchall()
+            
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':rows}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+    
+    # POST
+    def post(self):
+
+        try:
+            
+            # Parse the arguments
+            parser = reqparse.RequestParser()
+            parser.add_argument('name', type=str, help='Admin Name')
+            parser.add_argument('email', type=str, help='Admin Email')
+            parser.add_argument('password', type=str, help='Admin Password')
+            args = parser.parse_args()
+            
+            # Establish Connection
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            # Define values to be inserted
+            values = {
+                'name' : args['name'],
+                'email' : args['email'],
+                'password' : int(hashlib.sha1(args["password"].encode('utf-8')).hexdigest(), 16) % (10 ** 8)
+            }
+
+            # Execute Query
+            sql = "INSERT INTO admin (`name`, `email`, `password`) VALUES (%s, %s, %s)"
+            cursor.execute(sql, (values['name'], values['email'], values['password']))
+
+            # Commit connection
+            conn.commit()
+            
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':'inserted'}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+
 # API Resources
 api.add_resource(FileCache, '/api/cache')
 api.add_resource(Dashboard, '/api/dashboard')
 api.add_resource(ClearCache, '/api/clear/cache')
 api.add_resource(UserRequests, '/api/user/request')
 api.add_resource(RequestNotification, '/api/user/request/all')
+api.add_resource(MySQL, '/api/admin')
 
 if __name__ == "__main__":
     

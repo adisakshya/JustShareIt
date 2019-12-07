@@ -28,9 +28,20 @@ services:
       - '5000:5000'
     links:
       - redis
+      - db
   
   redis:
     build: ./redis
     container_name: JustShareIt_redis
     ports:
       - '6379:6379'
+  
+  db:
+    image: mysql:latest
+    container_name: JustShareIt_db
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
