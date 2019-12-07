@@ -1,3 +1,4 @@
+// Handle User Request to enable sharing
 $("#request_form").on("submit", function () {
     
   alert("Are you sure you want to send request for sharing?");
@@ -7,7 +8,7 @@ $("#request_form").on("submit", function () {
     "crossDomain": true,
     "method": "POST",
     "data" : data,
-    "url": "/JustShareIt",
+    "url": "/JustShareIt/user/register",
     "headers": {
       "Content-Type": "application/x-www-form-urlencoded",
       "cache-control": "no-cache"
@@ -22,6 +23,16 @@ $("#request_form").on("submit", function () {
 
 });
 
+// Replace content of page
+function ReplaceContent(new_content) {
+
+  document.open();
+  document.write(new_content);
+  document.close();
+
+}
+
+// Refresh Page Contents
 function refresh () {
   
   let username = getCookie("JustShareItUsername");
@@ -29,16 +40,25 @@ function refresh () {
     return;
   }
 
-  // alert("Welcome Back " + username);
-  // alert("If you are approved by admin, then you will be directed to the dashboard!");
-  var url = window.location.href;
-  if (url.indexOf('?') > -1){
-    url = url.slice(0, url.indexOf('?')+1);
-    url += 'username=' + username;
-  } else{
-    url += '?username=' + username;
+  let data = {
+    "username" : username
   }
-  window.location.href = url;
+  
+  var settings = {
+    "async": false,
+    "crossDomain": true,
+    "method": "POST",
+    "data" : data,
+    "url": "/JustShareIt",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "cache-control": "no-cache"
+    }
+  }
+
+  $.ajax(settings).done(function (response) {
+      ReplaceContent(response);
+  });
 
 }
 

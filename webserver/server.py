@@ -7,6 +7,8 @@ from utils.db import Database
 from utils.pathManipulator import PathManipulator
 from utils.qrcode import GenerateQRCode
 
+from utils.decorators import auth
+
 application = app = Flask(__name__)
 
 # Admin
@@ -177,47 +179,45 @@ def delete():
 
 # Client
 
-# Client Landing Page
+# User Landing Page
 @app.route("/JustShareIt", methods = ["GET", "POST"])
+@auth.login_required
 def client_login():
 
-    # GET
-    if request.method == "GET":
-
+    if request.method == "POST":
+    
         try:
+
+            # Get username
+            username = request.form.get("username")
+                
+            # GET request to API
+            obj = APIRequest()
+            response = obj.get("/dashboard", {}) 
+
+            # list of files
+            file_list = response[0]["message"]["key_list"]
             
-            # Fetch passed parameters
-            username = request.args.get("username")
-            
-            # If username provided
-            if username:
+            # Response Variable
+            res = {
+                'file_list' : file_list,
+                'number_of_files' : len(file_list)
+            }
 
-                # GET request to API
-                obj = APIRequest()
-                response = obj.get("/user/request", {
-                    "username" : username
-                })
+            # Render dashboard page
+            return render_template("share.html", files=res, admin_name="Adisakshya Chauhan", username=username)
 
-                # If user is approved
-                if response["message"]["access"] == "1":
-                    return redirect(url_for("user_dashboard"))
-                # elif user is not approved
-                elif response["message"]["access"] == "0":
-                    return render_template("client_login.html", requested=True)      
-                # else user hasn't requested
-                else:
-                    return render_template("client_login.html", clear_cookie=True)                    
-
-            # Render client login page
-            return render_template("client_login.html", requested=False, error=False)
-        
         # Report Exception
         except Exception as error:
-            
+
             return render_template("wrong.html", error=error)
 
+# User Request
+@app.route("/JustShareIt/user/register", methods = ["POST"])
+def register_user():
+
     # POST
-    elif request.method == "POST":
+    if request.method == "POST":
 
         try:
 
@@ -243,47 +243,18 @@ def client_login():
             
             return render_template("client_login.html", requested=False, error=error)
 
-# File sharing dashboard
-@app.route("/JustShareIt/dashboard", methods = ["GET"])
-def user_dashboard():
-
-    # GET
-    if request.method == "GET":
-
-        try:
-            
-            # GET request to API
-            obj = APIRequest()
-            response = obj.get("/dashboard", {}) 
-
-            # list of files
-            file_list = response[0]["message"]["key_list"]
-            
-            # Response Variable
-            res = {
-                'file_list' : file_list,
-                'number_of_files' : len(file_list)
-            }
-
-            # Render index page
-            return render_template("share.html", files=res, admin_name="Adisakshya Chauhan")
-
-        # Report Exception
-        except Exception as error:
-
-            return render_template("wrong.html", error=error)
-
 # Share File
-@app.route("/JustShareIt/client/share", methods = ["GET"])
+@app.route("/JustShareIt/user/share", methods = ["POST"])
+@auth.login_required
 def share_file():
 
     # GET
-    if request.method == "GET":
+    if request.method == "POST":
 
         try:
             
             # Fetch passed parameters
-            filename = request.args.get('filename')
+            filename = request.form.get('filename')
             
             # DB Instance
             obj = Database()

@@ -47,7 +47,7 @@
         </a>
     </div>
     
-    {% if files.number_of_files %}
+    {% if files.number_of_files and username %}
     <div class="row">
         {% for file in files.file_list %}
         <div class="col-md-6 col-xl-3 mb-4">
@@ -55,14 +55,17 @@
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col mr-2">
-                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>12 MB</span></div>
+                            <!-- <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>12 MB</span></div> -->
                             <div class="text-dark font-weight-bold h5 mb-0">
-                                <a href="http://192.168.225.54:5001/JustShareIt/client/share?filename={{file}}">
+                                <form action="/JustShareIt/user/share" method="POST">
+                                    <input type="text" value="{{ file }}" name="filename" hidden>
+                                    <input type="text" value="{{ username }}" name="username" hidden>
+                                    <button class="btn btn-primary" type="submit" style="float: right"><i class="fas fa-file-download"></i></button>
                                     <span>{{ file }}</span>
-                                </a>
+                                </form>
                             </div>
                         </div>
-                        <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                        <!-- <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div> -->
                     </div>
                 </div>
             </div>
