@@ -4,23 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>JustShareIt | Admin</title>
+    <title>admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_login.css') }}">
 </head>
 
 <body>
-    
-    <div class="container">
-
-        <form action="/JustShareIt/admin/auth/login" method="POST">
-            <input type="password" name="passcode" required>
-            <button type="submit" class="btn btn-primary">Login</button>
+    <div class="login-dark">
+        <form method="post" action="/JustShareIt/admin/auth/login">
+            <div class="illustration"><img src="{{ url_for('static', filename='img/logo.png') }}" class="rounded-circle" height="150px"></div>
+            <div class="form-group"><input type="password" class="form-control" name="password" placeholder="Password" /></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Sign In</button></div><a class="forgot" href="#">Forgot your password?</a>
         </form>
-
         {% if auth_fail %}
-            <h3>Auth failed</h3>
+            <h4 style="color: white;">Auth failed</h4>
         {% endif %}
     </div>
-
 </body>
 
 </html>

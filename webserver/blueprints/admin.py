@@ -21,7 +21,7 @@ def admin_login():
     elif request.method == "POST":
 
         # Get passcode
-        passcode = request.form.get("passcode")
+        passcode = request.form.get("password")
 
         # GET Request to API
         apiObj = APIRequest()
