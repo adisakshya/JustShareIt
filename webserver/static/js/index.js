@@ -25,7 +25,7 @@ function approveVisiter(visiterName) {
     "async": false,
     "crossDomain": true,
     "method": "PUT",
-    "url": "/JustShareIt/user/approve?username="+visiterName,
+    "url": "/JustShareIt/admin/approve/user?username="+visiterName,
     "headers": {
       "Content-Type": "application/x-www-form-urlencoded",
       "cache-control": "no-cache"
@@ -46,7 +46,7 @@ function rejectVisiter(visiterName) {
     "async": false,
     "crossDomain": true,
     "method": "DELETE",
-    "url": "/JustShareIt/user/reject?username="+visiterName,
+    "url": "/JustShareIt/admin/reject/user?username="+visiterName,
     "headers": {
       "Content-Type": "application/x-www-form-urlencoded",
       "cache-control": "no-cache"

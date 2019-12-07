@@ -7,14 +7,14 @@
     <title>JustShareIt | Share</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="../static/css/client_login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/client_login.css') }}">
 </head>
 
 <body>
     <div class="text-center profile-card" style="margin:15px;background-color:#ffffff;">
-        <div class="profile-card-img" style="background-image:url(&quot;iceland.jpg&quot;);height:150px;background-size:cover;"></div>
+        <div class="profile-card-img" style="height:150px;background-size:cover;"></div>
         <div>
-            <img class="rounded-circle" style="margin-top:-70px;" src="../static/img/avatar-dhg.png" height="150px">
+            <img class="rounded-circle" style="margin-top:-70px;" src="{{ url_for('static', filename='img/avatar-dhg.png') }}" height="150px">
             <h3>Adisakshya Chauhan</h3>
             <p style="padding:20px;padding-bottom:0;padding-top:5px;">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dapibus felis et libero scelerisque.

@@ -49,7 +49,7 @@ function refresh () {
     "crossDomain": true,
     "method": "POST",
     "data" : data,
-    "url": "/JustShareIt",
+    "url": "/JustShareIt/user/",
     "headers": {
       "Content-Type": "application/x-www-form-urlencoded",
       "cache-control": "no-cache"
