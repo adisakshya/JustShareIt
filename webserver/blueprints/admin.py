@@ -39,13 +39,13 @@ def admin_login():
             return render_template("admin_login.html")
 
 # Logout
-@administrator.route('/logout', methods=["POST"])
+@administrator.route('/auth/logout', methods=["POST"])
 @auth.admin_login_required
 def logout():
 
     if request.method == "POST":
         # remove the username from the session if it is there
-        session.pop('username', None)
+        session.pop("JustShareItAdmin", None)
         return redirect(url_for('admin.admin_login'))
 
 # Dashboard
