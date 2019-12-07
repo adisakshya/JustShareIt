@@ -16,8 +16,10 @@ init
 # docker-compose
 compose() {
 
-    echo "[INFO] ==> Cleaning up"
-    docker-compose down -v
+    # Stop all services
+    # Don't remove/clean containers
+    # As this would reset everything
+    docker-compose stop
     echo "[INFO] ==> Shutdown Successful"
 }
 
