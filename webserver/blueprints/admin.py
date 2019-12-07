@@ -1,15 +1,56 @@
 import os
-from flask import Blueprint, render_template, redirect, make_response, jsonify, request, url_for
+import hashlib
+from flask import Blueprint, render_template, redirect, make_response, jsonify, request, url_for, session
 
 from utils.apiUtil import APIRequest
 from utils.qrcode import GenerateQRCode
+from utils.decorators import auth
 
 administrator = Blueprint("admin", "admin", url_prefix="/JustShareIt/admin")
 
 # Admin
 
+# Login
+@administrator.route("/auth/login", methods = ["GET", "POST"])
+def admin_login():
+
+    if request.method == "GET":
+
+        return render_template("admin_login.html")
+    
+    elif request.method == "POST":
+
+        # Get passcode
+        passcode = request.form.get("passcode")
+
+        # GET Request to API
+        apiObj = APIRequest()
+        response = apiObj.get("/admin", {})
+
+        # Verify Access
+        if not response["error"] and response["message"]:
+            passcode = int(hashlib.sha1(passcode.encode('utf-8')).hexdigest(), 16) % (10 ** 8)
+            if passcode != int(response["message"][0][0]):
+                return render_template("admin_login.html", auth_fail=True)
+            else:
+                session["JustShareItAdmin"] = True
+                return redirect(url_for("admin.index"))
+        else:
+            return render_template("admin_login.html")
+
+# Logout
+@administrator.route('/logout', methods=["POST"])
+@auth.admin_login_required
+def logout():
+
+    if request.method == "POST":
+        # remove the username from the session if it is there
+        session.pop('username', None)
+        return redirect(url_for('admin.admin_login'))
+
 # Dashboard
 @administrator.route("/dashboard", methods = ["GET", "POST"])
+@auth.admin_login_required
 def index():
     
     # Initialize empty file list
@@ -84,6 +125,7 @@ def index():
 
 # Approve user request
 @administrator.route("/approve/user", methods = ["PUT"])
+@auth.admin_login_required
 def approve():
 
     if request.method == "PUT":
@@ -113,6 +155,7 @@ def approve():
 
 # Reject user request
 @administrator.route("/reject/user", methods = ["DELETE"])
+@auth.admin_login_required
 def reject():
 
     if request.method == "DELETE":
@@ -142,6 +185,7 @@ def reject():
 
 # Remove added file
 @administrator.route("/delete/file", methods = ["DELETE"])
+@auth.admin_login_required
 def delete():
 
     # DELETE

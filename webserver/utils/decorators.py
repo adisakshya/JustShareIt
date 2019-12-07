@@ -1,5 +1,6 @@
+import hashlib
 from functools import wraps
-from flask import request, redirect, render_template
+from flask import request, redirect, render_template, session, url_for
 from utils.apiUtil import APIRequest
 
 class auth:
@@ -9,21 +10,11 @@ class auth:
         @wraps(function)
         def verify_admin(*args, **kwargs):
 
-            # Get passcode
-            passcode = request.form.get("passcode")
-
-            # GET Request to API
-            apiObj = APIRequest()
-            response = apiObj.get("/admin/request", {
-                "passcode" : username
-            })
-
-            # Verify Access
-            if not response["error"] and response["message"]["access"]:
-                return "Admin Login Required"
+            if not session.get('JustShareItAdmin'):
+                return redirect(url_for("admin.admin_login"))
 
             return function(*args, **kwargs)
-
+        
         return verify_admin
 
     def login_required(function):

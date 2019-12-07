@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>JustShareIt | Admin</title>
+</head>
+
+<body>
+    
+    <div class="container">
+
+        <form action="/JustShareIt/admin/auth/login" method="POST">
+            <input type="password" name="passcode" required>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        {% if auth_fail %}
+            <h3>Auth failed</h3>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

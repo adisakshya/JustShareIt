@@ -8,4 +8,5 @@ application.register_blueprint(user)
 application.register_blueprint(administrator)
 
 port = os.environ.get("PORT", 5001)
+application.secret_key = os.urandom(12)
 application.run(debug=False, port=port, host="0.0.0.0")
