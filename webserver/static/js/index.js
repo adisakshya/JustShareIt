@@ -58,3 +58,16 @@ function rejectVisiter(visiterName) {
     alert("User Rejected, refresh page to see updated status!");
   });
 }
+
+function checkFileNotFound() {
+  let url_string = window.location.href;
+  let url = new URL(url_string);
+  let c = url.searchParams.get("file_not_found");
+  if(c) {
+    alert("File Not Found!");
+    let index = url_string.indexOf("?");
+    window.location.href = url_string.slice(0, index);
+  }
+}
+
+checkFileNotFound();

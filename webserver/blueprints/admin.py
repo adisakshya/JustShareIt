@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, redirect, make_response, jsonify, 
 from utils.apiUtil import APIRequest
 from utils.qrcode import GenerateQRCode
 from utils.decorators import auth
+from utils.pathManipulator import PathManipulator
 
 administrator = Blueprint("admin", "admin", url_prefix="/JustShareIt/admin")
 
@@ -65,6 +66,12 @@ def index():
             filename = request.form.get("filename")
             filepath = request.form.get("filepath")
             
+            # Check if file exist
+            manipObj = PathManipulator("JustShareIt/data")
+            file_path = manipObj.path_in_mount(filepath)
+            if not os.path.isfile(file_path + '/' + filename):
+                return redirect(url_for("admin.index", file_not_found=True)) 
+
             # POST request to API
             # Check if success
             obj = APIRequest()
