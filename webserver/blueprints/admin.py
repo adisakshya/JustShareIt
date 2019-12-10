@@ -17,7 +17,7 @@ def admin_login():
 
     if request.method == "GET":
 
-        return render_template("admin_login.html")
+        return render_template("admin_login.html", auth_fail=False)
     
     elif request.method == "POST":
 
@@ -28,16 +28,18 @@ def admin_login():
         apiObj = APIRequest()
         response = apiObj.get("/admin", {})
 
+        # Check success
+        if response["error"]:
+            return render_template("wrong.html", error=response["error"])
+
         # Verify Access
-        if not response["error"] and response["message"]:
+        if response["message"]:
             passcode = int(hashlib.sha1(passcode.encode('utf-8')).hexdigest(), 16) % (10 ** 8)
             if passcode != int(response["message"][0][0]):
                 return render_template("admin_login.html", auth_fail=True)
             else:
                 session["JustShareItAdmin"] = True
                 return redirect(url_for("admin.index"))
-        else:
-            return render_template("admin_login.html")
 
 # Logout
 @administrator.route('/auth/logout', methods=["POST"])

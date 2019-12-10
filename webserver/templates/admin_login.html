@@ -13,12 +13,15 @@
     <div class="login-dark">
         <form method="post" action="/JustShareIt/admin/auth/login">
             <div class="illustration"><img src="{{ url_for('static', filename='img/logo.png') }}" class="rounded-circle" height="150px"></div>
-            <div class="form-group"><input type="password" class="form-control" name="password" placeholder="Password" /></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Sign In</button></div><a class="forgot" href="#">Forgot your password?</a>
+            <div class="form-group"><input type="password" class="form-control" name="password" placeholder="Password" required/></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Sign In</button></div>
+            <a class="forgot" href="#">Forgot your password?</a>
+            {% if auth_fail %}
+                <script>
+                    alert("Authentication Failed!");
+                </script>
+            {% endif %}
         </form>
-        {% if auth_fail %}
-            <h4 style="color: white;">Auth failed</h4>
-        {% endif %}
     </div>
 </body>
 
