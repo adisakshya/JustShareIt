@@ -13,9 +13,10 @@
 <body id="page-top">
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content"><nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+            <div id="content">
+<nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
     <div class="container-fluid">
-        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <!-- <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
                 <input type="text" class="bg-light form-control border-0 small" placeholder="Search for ..." />
                 <div class="input-group-append">
@@ -24,27 +25,27 @@
                     </button>
                 </div>
             </div>
-        </form>
-        <ul class="nav navbar-nav flex-nowrap ml-auto">
+        </form> -->
+        <!-- <ul class="nav navbar-nav flex-nowrap ml-auto">
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow">
                 <div class="nav-item">
-                    <!-- {% if admin_name %}
+                    {% if admin_name %}
                     <div class="nav-link"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{ admin_name }}</span>
                         <img class="border rounded-circle img-profile" src="{{ url_for('static', filename='img/avatar2.jpeg') }}" />
                     </div>
-                    {% endif %} -->
+                    {% endif %}
                 </div>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </nav>
 <div class="container-fluid">
     <div class="d-sm-flex justify-content-between align-items-center mb-4">
         <h3 class="text-dark mb-0">Dashboard</h3>
-        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">
+        <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">
             <i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Download All
-        </a>
+        </a> -->
     </div>
     
     {% if files.number_of_files and username %}
