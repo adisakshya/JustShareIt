@@ -51,6 +51,27 @@ def logout():
         session.pop("JustShareItAdmin", None)
         return redirect(url_for('admin.admin_login'))
 
+# Change Password
+@administrator.route('/change/password', methods=["POST"])
+@auth.admin_login_required
+def logout():
+
+    if request.method == "POST":
+        
+        # GET parameters
+        old_password = request.form.get("old_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if new_password != confirm_password:
+            return "Password Mismatch"
+        
+        # GET Request to API
+        apiObj = APIRequest()
+        response = apiObj.get("/admin", {})
+
+        # Complete Functionality
+
 # Dashboard
 @administrator.route("/dashboard", methods = ["GET", "POST"])
 @auth.admin_login_required
