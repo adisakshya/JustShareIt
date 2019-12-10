@@ -405,6 +405,42 @@ class MySQL(Resource):
             # Report error
             print("[ERROR] ==>", error)
             return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+    
+    # PUT
+    def put(self):
+
+        try:
+            
+            # Parse the arguments
+            parser = reqparse.RequestParser()
+            parser.add_argument('password', type=str, help='Admin Password')
+            args = parser.parse_args()
+            
+            # Establish Connection
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            # Define values to be updated
+            values = {
+                'password' : args['password']
+            }
+
+            # Execute Query
+            sql = "UPDATE admin SET password = %s WHERE 1"
+            cursor.execute(sql, values['password'])
+
+            # Commit connection
+            conn.commit()
+            
+            # Return response
+            return make_response(jsonify({'success':True, 'error':None, 'message':'updated'}), 200)
+        
+        except Exception as error:
+            
+            # Report error
+            print("[ERROR] ==>", error)
+            return make_response(jsonify({'success':False, 'error':str(error), 'message':None}), 500)
+
 
 # API Resources
 api.add_resource(FileCache, '/api/cache')

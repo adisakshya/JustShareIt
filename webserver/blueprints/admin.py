@@ -54,7 +54,7 @@ def logout():
 # Change Password
 @administrator.route('/change/password', methods=["POST"])
 @auth.admin_login_required
-def logout():
+def change_password():
 
     if request.method == "POST":
         
@@ -64,13 +64,31 @@ def logout():
         confirm_password = request.form.get("confirm_password")
 
         if new_password != confirm_password:
-            return "Password Mismatch"
+            return redirect(url_for("admin.index"))
         
         # GET Request to API
         apiObj = APIRequest()
         response = apiObj.get("/admin", {})
 
-        # Complete Functionality
+        # Check success
+        if response["error"]:
+            return render_template("wrong.html", error=response["error"])
+
+        # Verify Access
+        if response["message"]:
+            passcode = int(hashlib.sha1(old_password.encode('utf-8')).hexdigest(), 16) % (10 ** 8)
+            if passcode != int(response["message"][0][0]):
+                return redirect(url_for("admin.index"))
+            else:
+                # Update Password
+                update_response = apiObj.put("/admin", {
+                    "password" : str(int(hashlib.sha1(new_password.encode('utf-8')).hexdigest(), 16) % (10 ** 8))
+                })
+                if update_response["error"]:
+                    return render_template("wrong.html", error=update_response["error"])
+
+                session.pop("JustShareItAdmin", None)
+                return redirect(url_for("admin.admin_login"))
 
 # Dashboard
 @administrator.route("/dashboard", methods = ["GET", "POST"])

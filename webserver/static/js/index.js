@@ -59,6 +59,47 @@ function rejectVisiter(visiterName) {
   });
 }
 
+function change_password() {
+
+  let old_password = $("#old_password").val();
+  let new_password = $("#new_password").val();
+  let confirm_password = $("#confirm_password").val();
+
+  let data = {
+    "old_password" : old_password,
+    "new_password" : new_password,
+    "confirm_password" : confirm_password
+  }
+
+  var settings = {
+    "async": false,
+    "crossDomain": true,
+    "method": "POST",
+    "data" : data,
+    "url": "/JustShareIt/admin/change/password",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "cache-control": "no-cache"
+    }
+  }
+
+  $.ajax(settings).done(function (response) {
+    alert("If the password is successfully changed then you will redirected to the login page!");
+  });
+}
+
+$("#password_form").on("submit", function () {
+
+  let new_password = $("#new_password").val();
+  let confirm_password = $("#confirm_password").val();
+
+  if(new_password != confirm_password) {
+    alert("Confirmed Password Mismatch!");
+    return false;
+  }
+
+})
+
 function checkFileNotFound() {
   let url_string = window.location.href;
   let url = new URL(url_string);
