@@ -16,16 +16,12 @@
             <div id="content">
 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
     <div class="container-fluid">
-        <!-- <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-                <input type="text" class="bg-light form-control border-0 small" placeholder="Search for ..." />
-                <div class="input-group-append">
-                    <button class="btn btn-primary py-0" type="button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
+                <input name="t1" type="text" class="t1 bg-light form-control border-0 small" placeholder="Search for ..." />
+                <input name="b1" type="submit" value="Find" hidden/>
             </div>
-        </form> -->
+        </form>
         <!-- <ul class="nav navbar-nav flex-nowrap ml-auto">
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow">
@@ -90,6 +86,8 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+
 </body>
 
 </html>
