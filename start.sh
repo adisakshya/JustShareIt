@@ -65,3 +65,8 @@ compose() {
 # Call to set environment variables for docker-compose
 # and run docker-compose
 set_compose_env && compose
+
+# Executing tests
+for f in ./test/*.sh; do
+  bash "$f" || break # execute successfully or break
+done
