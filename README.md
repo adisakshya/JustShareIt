@@ -36,7 +36,7 @@ Files to be shared are simply not stored on your disk, this is extremely storage
 
 ### Share with anyone 💻📱
 
-Select files from your laptop/personal-computer with any type of client, let it be another laptop/personal-computer or mobile devices. No matter what OS they are operating on.
+Share files from your laptop/personal-computer with any type of client, let it be another laptop/personal-computer or mobile devices. No matter what OS they are operating on.
 
 When I used to use SHAREIt, to transfer files from my laptop to mobile/another-laptop it required that it's app to be installed on both the devices i.e., on sender & receiver, this created hurdles for sharing conveniently.
 
@@ -85,6 +85,8 @@ Docker - Set of platform as a service products that use OS-level virtualization 
 - After successful startup, the app will be available
 	- At ```http://<your-ip-address>:5001/JustShareIt/admin/dashboard``` for the admin (sender).
 	- At ```http://<your-ip-address>:5001/JustShareIt/user``` for the user (receiver).
+	- Admin (sender) can add the files to share from admin-dashboard.
+	- Users can access shared files from user-dashboard, after access-request is approved by the admin.
 - To stop the services run, ```$ sh stop.sh```
 	- Adding a "-r" argument like ```$ stop.sh -r```, cleans all the app containers & volume mounts, and reset the app to default configurations.
 	- Executing the above command without "-r", simply stops all services and don't reset to default.
