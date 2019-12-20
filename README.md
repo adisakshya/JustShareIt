@@ -19,7 +19,7 @@ So I built my own. 😃
 Open-source sharing app with fast cross-platform transfer speed, free of online feeds. Enables sharing files including photos, videos, music, contacts, apps and any other files, no matter of what size.
 
 <p align="center">
-  <a href="https://img.notable.md/screenshot-editor.png">
+  <a href="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/user_landing_page.png">
   <img src="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/user_landing_page.png" width="800" alt="User landing page" />
   </a>
 </p>
@@ -29,7 +29,7 @@ Open-source sharing app with fast cross-platform transfer speed, free of online 
 Files to be shared are simply not stored on your disk, this is extremely storage friendly, unlike conventional apps some space is required to store the files first on app storage and then share them with the receiver.
 
 <p align="center">
-  <a href="https://img.notable.md/screenshot-filesystem.png">
+  <a href="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/shared_files.png">
    <img src="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/shared_files.png" width="800" alt="Shared Files" />
   </a>
 </p>
@@ -43,7 +43,7 @@ When I used to use SHAREIt, to transfer files from my laptop to mobile/another-l
 Having JustShareIt installed on both ends is not required. Only the sender needs to have it installed. Receiver can access the shared files using any convient browser on their devices upon sharing approval from the sender.
 
 <p align="center">
-  <a href="https://img.notable.md/screenshot-dark.png">
+  <a href="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/share_with_mobile.png">
     <img src="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/share_with_mobile.png" width="800" alt="Share with mobile devices" />
   </a>
 </p>
@@ -53,7 +53,7 @@ Having JustShareIt installed on both ends is not required. Only the sender needs
 No one, except you can access JustShareIt for sharing files from your system with anyone.
 
 <p align="center">
-  <a href="https://img.notable.md/screenshot-zen.png">
+  <a href="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/admin_login.png">
    <img src="https://github.com/adisakshya/JustShareIt/raw/master/screenshots/admin_login.png" width="800" alt="Admin Login" />
   </a>
 </p>
