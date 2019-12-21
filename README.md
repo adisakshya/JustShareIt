@@ -60,6 +60,8 @@ No one, except you can access JustShareIt for sharing files from your system wit
 
 ## Getting Started
 
+**Note: The source code in the current release is of a prototype powered by python, created to demonstrate working of the real application. The original application will be released soon.**
+
 JustFollow below steps to setup the app:
 
 ### Prerequisites
