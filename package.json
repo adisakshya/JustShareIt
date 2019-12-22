@@ -1,0 +1,24 @@
+{
+  "name": "justshareit",
+  "version": "1.1.0",
+  "description": "File sharing app with fast cross-platform transfer speed, sharing files including photos, videos, music, contacts, apps and any other files, no matter of what size.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisakshya/JustShareIt.git"
+  },
+  "keywords": [
+    "socket.io",
+    "web-sockets",
+    "file-share"
+  ],
+  "author": "Adisakshya Chauhan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adisakshya/JustShareIt/issues"
+  },
+  "homepage": "https://github.com/adisakshya/JustShareIt#readme"
+}
