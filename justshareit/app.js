@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
 var socket = require('socket.io');
 
 var indexRouter = require('./routes/admin');
@@ -48,7 +49,25 @@ io.on('connection', function (socket) {
   socket.on("create", function () {
     console.log("SOCKET a new user connected");
   });
+  
+  var data = '';
+  
+  var readerStream = fs.createReadStream('image.jpeg');  
+  readerStream.setEncoding('binary'); 
 
+  readerStream.on('data', function(chunk) {
+    data += chunk;
+    socket.emit('image', chunk);
+  }); 
+    
+  readerStream.on('end',function() { 
+      console.log("READSTREAM end event triggered"); 
+  }); 
+    
+  readerStream.on('error', function(err) { 
+      console.log('READSTREAM Error: ', err.stack); 
+  }); 
+ 
   socket.on("disconnect", function () {
     console.log("SOCKET a user disconnected");
   });
