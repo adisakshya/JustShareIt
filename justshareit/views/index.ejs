@@ -7,5 +7,15 @@
   <body>
     <h1><%= title %> Page</h1>
     <p>Welcome to <%= title %> page</p>
+    <hr>
+    <input type="file" id="fileinput"/>
+    <button id='btnLoad' onclick='handleFile()'>Load File</button>
+    <div id="editor"></div>
+    <!-- <img id="image" src=""/> -->
+  
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/socket.io.js"></script>
+    <script src="/javascripts/admin.js"></script>
+
   </body>
 </html>

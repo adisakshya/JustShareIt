@@ -50,24 +50,11 @@ io.on('connection', function (socket) {
     console.log("SOCKET a new user connected");
   });
   
-  var data = '';
-  
-  var readerStream = fs.createReadStream('image.jpeg');  
-  readerStream.setEncoding('binary'); 
+  socket.on('file', function (result) {
+    console.log("Got Result");
+    socket.broadcast.emit('image_src', result);
+  });
 
-  readerStream.on('data', function(chunk) {
-    data += chunk;
-    socket.emit('image', chunk);
-  }); 
-    
-  readerStream.on('end',function() { 
-      console.log("READSTREAM end event triggered"); 
-  }); 
-    
-  readerStream.on('error', function(err) { 
-      console.log('READSTREAM Error: ', err.stack); 
-  }); 
- 
   socket.on("disconnect", function () {
     console.log("SOCKET a user disconnected");
   });
