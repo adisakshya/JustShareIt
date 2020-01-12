@@ -44,15 +44,46 @@ app.use(function(err, req, res, next) {
 var io = socket();
 app.io = io;
 
+var files = {}, 
+  struct = { 
+      name: null, 
+      type: null, 
+      size: 0, 
+      data: [], 
+      slice: 0, 
+};
+
 io.on('connection', function (socket) {
 
   socket.on("create", function () {
     console.log("SOCKET a new user connected");
   });
-  
-  socket.on('file', function (result) {
-    console.log("Got Result");
-    socket.broadcast.emit('image_src', result);
+
+  socket.on('slice', function (data) {
+    if (!files[data.name]) { 
+      files[data.name] = Object.assign({}, struct, data); 
+      files[data.name].data = []; 
+    }
+    
+    //convert the ArrayBuffer to Buffer 
+    // data.data = new Buffer(new Uint8Array(data.data)); 
+    //save the data 
+    files[data.name].data.push(data.data); 
+    files[data.name].slice++;
+    
+    if (files[data.name].slice * 100000 >= files[data.name].size) { 
+        // var fileBuffer = files[data.name].data;
+      
+        // fs.writeFile('tmp/'+data.name, fileBuffer, (err) => { 
+        //     if (err) console.log('Error:', err); 
+        // });
+        console.log("upload complete"); 
+    } else { 
+        socket.emit('request slice', { 
+            currentSlice: files[data.name].slice
+        }); 
+    } 
+    socket.broadcast.emit('send slice', data);
   });
 
   socket.on("disconnect", function () {

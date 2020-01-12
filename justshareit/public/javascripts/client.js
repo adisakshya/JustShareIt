@@ -1,37 +1,37 @@
 var socket = io().connect();
 
-function add(text) {
-    var element = document.createElement("input");
-    //Assign attributes to the element. 
-    element.type = 'button';
-    element.value = 'button';
-    element.name = 'button';
-    element.onclick = function() {
-        var filename = "hello.pdf";
-        download(filename, text);
-    };
-  
-    var downloadFields = document.getElementById("downloadFields");
-    //Append the element in page (in span).  
-    downloadFields.appendChild(element);
-}
+socket.emit('create');
 
-function download(filename, text) {
-    var element = document.createElement('a');
-    element.setAttribute('href', text);
-    element.setAttribute('download', filename);
+var files = {}, 
+  struct = { 
+      name: null, 
+      type: null, 
+      size: 0, 
+      data: [], 
+      slice: 0, 
+};
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-}
-
-socket.on('image_src', function (result) {
-
-    // 1. Create Download Button
-    add(result);
-
+socket.on('send slice', function (data) {
+    console.log("received slice");
+    if (!files[data.name]) { 
+        files[data.name] = Object.assign({}, struct, data); 
+        files[data.name].data = []; 
+    }
+    
+    //convert the ArrayBuffer to Buffer 
+    // data.data = new Uint8Array(data.data); 
+    //save the data 
+    files[data.name].data.push(data); 
+    files[data.name].slice++;
+    
+    if (files[data.name].slice * 100000 >= files[data.name].size) { 
+        console.log("receive complete");
+        console.log("Files Data:", files[data.name]);
+        var file = new File(files[data.name].data, files[data.name].name);
+        console.log("File:", file);
+        var link=document.createElement('a');
+        link.href=window.URL.createObjectURL(file);
+        link.download=files[data.name].name;
+        link.click();        
+    }
 });
