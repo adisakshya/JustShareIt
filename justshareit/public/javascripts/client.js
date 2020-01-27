@@ -18,16 +18,21 @@ socket.on('send slice', function (data) {
         files[data.name].data = []; 
     }
     
-    //convert the ArrayBuffer to Buffer 
-    // data.data = new Uint8Array(data.data); 
     //save the data 
     files[data.name].data.push(data); 
     files[data.name].slice++;
     
     if (files[data.name].slice * 100000 >= files[data.name].size) { 
         console.log("receive complete");
-        console.log("Files Data:", files[data.name]);
-        var file = new File(files[data.name].data, files[data.name].name);
+
+        var buffer = files[data.name].data[0].data;
+        for(var i=1; i<files[data.name].slice; i++) {
+            buffer = Array.prototype.concat(buffer, files[data.name].data[i].data)
+            console.log("Concatenated ", i, " buffer");
+        }
+        
+        // files[data.name].data = buffer;
+        var file = new File(buffer, files[data.name].name);
         console.log("File:", file);
         var link=document.createElement('a');
         link.href=window.URL.createObjectURL(file);

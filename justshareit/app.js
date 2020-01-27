@@ -65,15 +65,12 @@ io.on('connection', function (socket) {
       files[data.name].data = []; 
     }
     
-    //convert the ArrayBuffer to Buffer 
-    // data.data = new Buffer(new Uint8Array(data.data)); 
     //save the data 
     files[data.name].data.push(data.data); 
     files[data.name].slice++;
     
     if (files[data.name].slice * 100000 >= files[data.name].size) { 
-        // var fileBuffer = files[data.name].data;
-      
+        // var fileBuffer = Buffer.concat(files[data.name].data);
         // fs.writeFile('tmp/'+data.name, fileBuffer, (err) => { 
         //     if (err) console.log('Error:', err); 
         // });
