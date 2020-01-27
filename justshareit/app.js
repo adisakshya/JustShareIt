@@ -55,20 +55,25 @@ var files = {},
 
 io.on('connection', function (socket) {
 
+  /* a new user connected */
   socket.on("create", function () {
     console.log("SOCKET a new user connected");
   });
 
+  /* file slice received from admin */
   socket.on('slice', function (data) {
+
+    /* if file not already uploaded */
     if (!files[data.name]) { 
       files[data.name] = Object.assign({}, struct, data); 
       files[data.name].data = []; 
     }
     
-    //save the data 
+    /* save the data & increment number of slices received */
     files[data.name].data.push(data.data); 
     files[data.name].slice++;
     
+    /* complete file is received */
     if (files[data.name].slice * 100000 >= files[data.name].size) { 
         // var fileBuffer = Buffer.concat(files[data.name].data);
         // fs.writeFile('tmp/'+data.name, fileBuffer, (err) => { 
@@ -76,13 +81,18 @@ io.on('connection', function (socket) {
         // });
         console.log("upload complete"); 
     } else { 
+        /* request next slice */
         socket.emit('request slice', { 
             currentSlice: files[data.name].slice
         }); 
     } 
+    
+    /* forward slice to client */
     socket.broadcast.emit('send slice', data);
+
   });
 
+  /* on disconnect */
   socket.on("disconnect", function () {
     console.log("SOCKET a user disconnected");
   });
