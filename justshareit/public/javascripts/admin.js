@@ -46,7 +46,8 @@ $('#fileinput').on('change', function () {
       name: file.name,
       type: file.type, 
       size: file.size, 
-      data: arrayBuffer 
+      data: arrayBuffer,
+      currentSize: event.target.result.byteLength
     });
   }
 

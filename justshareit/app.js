@@ -51,6 +51,7 @@ var files = {},
       size: 0, 
       data: [], 
       slice: 0, 
+      currentSize: 0
 };
 
 io.on('connection', function (socket) {
@@ -67,12 +68,14 @@ io.on('connection', function (socket) {
     if (!files[data.name]) { 
       files[data.name] = Object.assign({}, struct, data); 
       files[data.name].data = []; 
+      files[data.name].currentSize = 0;
     }
     
     /* save the data & increment number of slices received */
     files[data.name].data.push(data.data); 
     files[data.name].slice++;
-    
+    files[data.name].currentSize += data.currentSize;
+
     /* complete file is received */
     if (files[data.name].slice * 100000 >= files[data.name].size) { 
         // var fileBuffer = Buffer.concat(files[data.name].data);

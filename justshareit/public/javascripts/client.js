@@ -10,6 +10,7 @@ var files = {},
       size: 0, 
       data: [], 
       slice: 0, 
+      currentSize: 0,
 };
 
 /* slice received from server */
@@ -21,11 +22,16 @@ socket.on('send slice', function (data) {
     if (!files[data.name]) { 
         files[data.name] = Object.assign({}, struct, data); 
         files[data.name].data = []; 
+        files[data.name].currentSize = 0;
     }
     
     /* save data and increment number of slices */
     files[data.name].data.push(data); 
     files[data.name].slice++;
+    files[data.name].currentSize += data.currentSize;
+    
+    /* Progress */
+    console.log("Progress: ", parseInt(100*(files[data.name].currentSize/files[data.name].size)));
     
     /* complete file received from server */
     if (files[data.name].slice * 100000 >= files[data.name].size) { 
