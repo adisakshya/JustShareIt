@@ -2,17 +2,35 @@
 <html>
   <head>
     <title><%= title %></title>
+    <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/form.css' />
   </head>
   <body>
     <h1><%= title %> Page</h1>
     <p>Welcome to <%= title %> page</p>
     <hr>
-    <input type="file" id="fileinput"/>
-    <button id='btnLoad'>Load File</button>
-    <div id="editor"></div>
-    <!-- <img id="image" src=""/> -->
-  
+    
+    <form id="file-upload-form">
+      <input id="file-upload" type="file" name="fileUpload" />
+      <label for="file-upload" id="file-drag">
+        <span style="display: block;">
+          <!-- <i class="fa fa-cloud-upload fa-4x"></i> -->
+        </span>
+        <br />
+        <span style="font-size: 25px;">
+          DRAG & DROP
+          <br />or
+        </span>
+        <br />
+        <span id="file-upload-btn" class="button">Click to browse</span>
+      </label>
+
+      <hr style="border: 1px solid black" />
+      
+      <output for="file-upload" id="messages"></output>
+    </form>
+
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/admin.js"></script>

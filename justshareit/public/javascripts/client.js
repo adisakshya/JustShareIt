@@ -16,7 +16,7 @@ var files = {},
 /* slice received from server */
 socket.on('send slice', function (data) {
     
-    console.log("received slice");
+    console.log("received slice", data);
     
     /* if file not already received */
     if (!files[data.name]) { 
@@ -38,7 +38,7 @@ socket.on('send slice', function (data) {
         console.log("receive complete");
 
         /* initialize buffer */
-        var buffer = files[data.name].data[0].data;
+        var buffer = [files[data.name].data[0].data];
         
         /* concatenate all file slices */
         for(var i=1; i<files[data.name].slice; i++) {
