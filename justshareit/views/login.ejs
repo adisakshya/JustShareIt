@@ -1,15 +1,66 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title><%= title %></title>
-  </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>JustShareIt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+</head>
 
-  <body>
-    
-    <h1><%= title %> Page</h1>
-    <p>Welcome to <%= title %> page</p>
-    <hr>
+<body>
+  <section style="margin-top:5%; max-width:100%;">
+    <div class="text-center profile-card" style="background-color:#ffffff;">
+        <div class="profile-card-img" style="height:150px;background-size:cover;"></div>
+        <div>
+            <img class="rounded-circle" style="margin-top:-70px;" src="/images/logo.png" height="150px">
+            <div class="container">
+                <hr>
+            </div>
+            <p style="padding:20px;padding-bottom:0;padding-top:5px;font-style: italic;">
+                JustShareIt, excellent open-source sharing app with fast cross-platform transfer speed, free of online feeds.<br/>
+                It enables sharing files including photos, videos, music, contacts, apps and any other files, no matter of what size.
+            </p>
+        </div>
+        <div class="row" style="padding:0;padding-bottom:10px;padding-top:20px;">
+            <div class="col">
+                <div>
+                  <% if (this.requested) { %>
+                    <a class="btn btn-info btn-lg" role="button" data-toggle="modal" href="#" id="access_granted">Access Requested</a>
+                    <p>You will be redirected to dashboard, once admin approves your request!</p>
+                  <% } else { %>
+                    <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" href="#login">JustShareIt</a>
+                  <% } %>
+                  
+                    <div class="modal fade" role="dialog" tabindex="-1" id="login">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body" style="padding:0">
+                                    <div class="login-clean">
+                                        <form method="POST" id="request_form">
+                                            <div class="illustration">
+                                                <i class="icon ion-ios-navigate"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="username" class="form-control" type="text" name="username" placeholder="Enter Username" />
+                                            </div>
+                                            <button class="btn btn-primary btn-block" type="submit">Send Request!</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
 
-  </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
