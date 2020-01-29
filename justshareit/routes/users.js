@@ -9,7 +9,7 @@ var Users = [];
 
 /* GET user home page. */
 router.get('/', function(req, res, next) {
-  res.render('client', { title: 'User' });
+  res.render('login', { title: 'Login' });
 });
 
 /* USER REQUEST */
