@@ -93,68 +93,18 @@ function fileDragHover(e) {
 				});
 			
 			});
+		
+			parseOutput(file);
 		}
 		
-		parseOutput(file);
-	}
-
-	function output(msg) {
-		var m = document.getElementById('messages');
-		m.innerHTML = msg;
 	}
 
 	function parseOutput(file) {
-		output(
-			'<ul>'
-			+	'<li>Name: <strong>' + file.name + '</strong></li>'
-			+	'<li>Type: <strong>' + file.type + '</strong></li>'
-			+	'<li>Size: <strong>' + (file.size / (1024 * 1024)).toFixed(2) + ' MB</strong></li>'
-			+ '</ul>'
-		);
+		var html =  '<div style="border:1px solid black; width:fit-content; padding:5px;"><strong>' + file.name + '</strong><p>' + (file.size / (1024 * 1024)).toFixed(2) + '&nbsp MB</p></div>';
+		html = $.parseHTML( html);
+		$("#messages").append(html);
 	}
-
-	// function uploadFile(file) {
-            
-	// 	/* create file-reader object */
-	// 	let fileReader = new FileReader();
-
-	// 	/* define slice */
-	// 	let slice = file.slice(0, 100000); 
-
-	// 	/* read file in slices asarray-buffer */
-	// 	fileReader.readAsArrayBuffer(slice); 
-	// 	fileReader.onload = () => {
-	// 		let arrayBuffer = fileReader.result;
-	// 		console.log("File: ", file);
-			// /* send slice to socket server */
-			// socket.emit('slice', {
-			// 	name: file.name,
-			// 	type: file.type, 
-			// 	size: file.size, 
-			// 	data: arrayBuffer,
-			// 	currentSize: event.target.result.byteLength
-			// });
-	// 	}
-
-	// 	/* on slice request from server */
-	// 	socket.on('request slice', (data) => { 
-			
-	// 		if(data.currentSlice * 100000 >= file.size) {
-	// 			return;
-	// 		};
-
-	// 		let place = data.currentSlice * 100000, 
-	// 			slice = file.slice(place, place + Math.min(100000, file.size - place)); 
-
-	// 		fileReader.readAsArrayBuffer(slice); 
-	// 	});
-
-	// 	socket.on('upload complete', (filename) => {
-	// 		console.log(filename, " transfered!");
-	// 	});
-  
-	// }
-    
+	    
     // Check for the various File API support.
     if (window.File && window.FileList && window.FileReader) {
         Init();
