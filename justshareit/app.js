@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
 
   /* file slice received from admin */
   socket.on('slice', function (data) {
-    console.log(data);
+
     /* if file not already uploaded */
     if (!files[data.name]) { 
       files[data.name] = Object.assign({}, struct, data); 
@@ -83,12 +83,7 @@ io.on('connection', function (socket) {
         //     if (err) console.log('Error:', err); 
         // });
         socket.emit('upload complete', data.name);
-    } else { 
-        /* request next slice */
-        socket.emit('request slice', { 
-            currentSlice: files[data.name].slice
-        }); 
-    } 
+    }
     
     /* forward slice to client */
     socket.broadcast.emit('send slice', data);

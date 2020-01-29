@@ -34,7 +34,7 @@ socket.on('send slice', function (data) {
     console.log("Progress: ", parseInt(100*(files[data.name].currentSize/files[data.name].size)));
     
     /* complete file received from server */
-    if (files[data.name].slice * 100000 >= files[data.name].size) { 
+    if (files[data.name].currentSize == files[data.name].size) { 
         console.log("receive complete");
 
         /* initialize buffer */
