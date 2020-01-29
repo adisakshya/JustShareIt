@@ -8,6 +8,10 @@ const socket = io().connect();
 /* connect to socket server */
 socket.emit('create');
 
+socket.on('already transfered', function () {
+	console.log("File already transfered!");
+});
+
 (function() {
 	function Init() {
 		var fileSelect = document.getElementById('file-upload'),
@@ -69,24 +73,28 @@ function fileDragHover(e) {
 
 	async function fileSelectHandler(e) {
 		// Fetch FileList object
-		var file = e.target.files[0];
+		var file = e.target.files;
 
 		// Cancel event and hover styling
 		fileDragHover(e);
-
-	// Process all File objects
-    parseFile(file, function (data, filename, filetype, filesize) {
-      
-		/* send slice to socket server */
-		socket.emit('slice', {
-			name: filename,
-			type: filetype, 
-			size: filesize, 
-			data: data,
-			currentSize: data.byteLength
-		});
-      
-    });
+		
+		// Process all File objects
+		for(let i=0; i<e.target.files.length; i++) {
+			let file = e.target.files[i];
+			parseFile(file, function (data, filename, filetype, filesize) {
+		
+				/* send slice to socket server */
+				socket.emit('slice', {
+					name: filename,
+					type: filetype, 
+					size: filesize, 
+					data: data,
+					currentSize: data.byteLength
+				});
+			
+			});
+		}
+		
 		parseOutput(file);
 	}
 

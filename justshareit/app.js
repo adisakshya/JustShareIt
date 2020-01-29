@@ -70,6 +70,12 @@ io.on('connection', function (socket) {
       files[data.name].data = []; 
       files[data.name].currentSize = 0;
     }
+
+    /* if file has already been transfered */
+    if (files[data.name] && files[data.name].currentSize == files[data.name].size && files[data.name].type == data.type) {
+      socket.emit('already transfered');
+      return;
+    }
     
     /* save the data & increment number of slices received */
     files[data.name].data.push(data.data); 
