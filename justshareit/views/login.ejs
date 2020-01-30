@@ -27,19 +27,16 @@
         <div class="row" style="padding:0;padding-bottom:10px;padding-top:20px;">
             <div class="col">
                 <div>
-                  <% if (this.requested) { %>
-                    <a class="btn btn-info btn-lg" role="button" data-toggle="modal" href="#" id="access_granted">Access Requested</a>
-                    <p>You will be redirected to dashboard, once admin approves your request!</p>
-                  <% } else { %>
-                    <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" href="#login">JustShareIt</a>
-                  <% } %>
+                    <div id="request-section">
+                        <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" href="#login">JustShareIt</a>
+                    </div>
                   
                     <div class="modal fade" role="dialog" tabindex="-1" id="login">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body" style="padding:0">
                                     <div class="login-clean">
-                                        <form method="POST" id="request_form">
+                                        <form method="POST" action="/request" id="request_form">
                                             <div class="illustration">
                                                 <i class="icon ion-ios-navigate"></i>
                                             </div>
@@ -61,6 +58,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="/javascripts/login.js"></script>
 </body>
 
 </html>
