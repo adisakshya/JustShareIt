@@ -1,22 +1,48 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>JustShareIt | Client</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+</head>
 
-  <body>
-    
-    <h1><%= title %> Page</h1>
-    <p>Welcome to <%= title %> page</p>
-    <hr>
-    <p id="downloadFields">Available Downloads: </p>
-    <div class="append"></div>
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+              <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                  <div class="container-fluid">
+                      <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                          <div class="input-group">
+                              <input name="t1" type="text" class="t1 bg-light form-control border-0 small" placeholder="Search for ..." />
+                              <input name="b1" type="submit" value="Find" hidden/>
+                          </div>
+                      </form>
+                  </div>
+              </nav>
+              <div class="container-fluid">
+                  <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                      <h3 class="text-dark mb-0">Dashboard</h3>
+                  </div>
+                  
+                  <div class="row" id="file-zone"></div>
+
+              </div>
+            </div>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
 
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/client.js"></script>
 
-  </body>
+</body>
+
 </html>

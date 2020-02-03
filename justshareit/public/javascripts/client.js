@@ -31,7 +31,8 @@ socket.on('send slice', function (data) {
     files[data.name].currentSize += data.currentSize;
     
     /* Progress */
-    console.log("Progress: ", parseInt(100*(files[data.name].currentSize/files[data.name].size)));
+    var progress = parseInt(100*(files[data.name].currentSize/files[data.name].size));
+    console.log("Progress: ", progress);
     
     /* complete file received from server */
     if (files[data.name].currentSize == files[data.name].size) { 
@@ -49,6 +50,25 @@ socket.on('send slice', function (data) {
         var file = new File(buffer, files[data.name].name);
         
         /* download file */
+        var template = `
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-primary py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-dark font-weight-bold h5 mb-0">
+                                <span>` + files[data.name].name + `</span>
+                                <br/>
+                                <span>` + (file.size / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        $('#file-zone').append(template);
+        
         var link=document.createElement('a');
         link.href=window.URL.createObjectURL(file);
         link.download=files[data.name].name;

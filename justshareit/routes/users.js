@@ -199,13 +199,15 @@ router.post('/client', async function (req, res) {
   }
 
   /* Return */
-  res.json({
-    "success":true,
-    "error":false,
-    "message": {
-      "token": token,
-    }
-  });
+  // res.json({
+  //   "success":true,
+  //   "error":false,
+  //   "message": {
+  //     "token": token,
+  //   }
+  // });
+
+  res.render('client');
 });
 
 module.exports = router;
