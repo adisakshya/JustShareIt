@@ -100,9 +100,26 @@ function fileDragHover(e) {
 	}
 
 	function parseOutput(file) {
-		var html =  '<div style="border:1px solid black; width:fit-content; padding:5px;"><strong>' + file.name + '</strong><p>' + (file.size / (1024 * 1024)).toFixed(2) + '&nbsp MB</p></div>';
+		var html = `
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-primary py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-dark font-weight-bold h5 mb-0">
+                                <span>` + file.name + `</span>
+                                <br/>
+                                <span>` + (file.size / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+		// var html =  '<div style="border:1px solid black; width:fit-content; padding:5px;"><strong>' + file.name + '</strong><p>' + (file.size / (1024 * 1024)).toFixed(2) + '&nbsp MB</p></div>';
 		html = $.parseHTML( html);
-		$("#messages").append(html);
+		$("#file-zone").append(html);
 	}
 	    
     // Check for the various File API support.
