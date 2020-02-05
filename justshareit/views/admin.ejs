@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <title>JustShareIt | Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/form.css' />
   </head>
   <body>
+
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Users Requests</button>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Requests</h4>
+        </div>
+        <div class="modal-body">
+          <ol class="list-group" id="user-requests">
+            <% for(var i=0; i < users.length; i++) { %>
+              <li class="list-group-item" style="margin-bottom: 2%;padding-bottom: 3%;">
+                <span style="font-size:22px"><%= users[i].username %></span>
+                <% if(users[i].token){ %>
+                  <span>
+                    <p style="float:right;color:green;font-size: 22px;">
+                      Approved
+                    </p>
+                  </span>
+                <% } else{ %>
+                  <form onsubmit="rejectVisiter('<%= users[i].username %>')" style="float:right;">
+                    <button type="submit" class="btn btn-danger">
+                      Reject
+                    </button>
+                  </form>
+                  <form onsubmit="approveVisiter('<%= users[i].username %>')" style="float:right;margin-right: 2%;">
+                    <button type="submit" class="btn btn-success">
+                      Approve
+                    </button>
+                  </form>
+                <% } %>
+              </li>
+           <% } %>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
     <form id="file-upload-form">
       <input id="file-upload" type="file" name="fileUpload" multiple/>
       <label for="file-upload" id="file-drag">
@@ -28,9 +71,9 @@
       <div class="row" id="file-zone"></div>
     </form>
 
-    <script src="/javascripts/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/admin.js"></script>
-
   </body>
 </html>

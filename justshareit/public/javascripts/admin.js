@@ -130,3 +130,47 @@ function fileDragHover(e) {
     }
 
 })();
+
+function approveVisiter(visiterName) {
+    
+    var settings = {
+      "async": false,
+      "crossDomain": true,
+      "method": "POST",
+      "url": "/approve",
+      "data": {"username": visiterName},
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache"
+      }
+    }
+  
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+      alert("User Approved!");
+      return false;
+    });
+
+}
+
+function rejectVisiter(visiterName, token) {
+    console.log(visiterName);
+    var settings = {
+      "async": false,
+      "crossDomain": true,
+      "method": "POST",
+      "url": "/reject",
+      "data": {"username": visiterName},
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache"
+      }
+    }
+  
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+      alert("User Rejected!");
+      return false;
+    });
+
+}

@@ -68,7 +68,13 @@ router.post('/request', function (req, res) {
 router.post('/users', function (req, res) {
 
   /* GET all users */
-  res.json({"users":Users});
+  res.json({
+    "success": true,
+    "error": false,
+    "message": {
+      "users":Users
+    }
+  });
 
 });
 
@@ -76,19 +82,19 @@ router.post('/users', function (req, res) {
 router.post('/approve', function (req, res) {
 
   /* AUTHENTICATE ADMIN */
-  var adminIdentity = adminAuth();
-  var requestIdentity = req.connection.remoteAddress;
+  // var adminIdentity = adminAuth();
+  // var requestIdentity = req.connection.remoteAddress;
   
-  var flag = 0;
-  for(var i=0; i<adminIdentity.length; i++) {
-    if(adminIdentity[i] === requestIdentity.split(":")[3]) {
-      flag = 1;
-    }
-  }
+  // var flag = 0;
+  // for(var i=0; i<adminIdentity.length; i++) {
+  //   if(adminIdentity[i] === requestIdentity.split(":")[3]) {
+  //     flag = 1;
+  //   }
+  // }
   
-  if(!flag) {
-    res.send("Only Admin can do this!");
-  }
+  // if(!flag) {
+  //   res.send("Only Admin can do this!");
+  // }
 
   /* GET username */
   var profile = {
@@ -99,29 +105,64 @@ router.post('/approve', function (req, res) {
   if(!Users.length) {
     res.send("Invalid Request!");
   }
-  var userIndex = 0;
   for(var i=0; i<Users.length; i++) {
-    if(!(Users[i].username === req.body.username)) {
-      res.send("Invalid Request!");
-    } else if(Users[i].token) {
+    if(Users[i].username === req.body.username && !Users[i].token) {
+      /* sending the profile in the token */
+      var jwtToken = jwt.sign(profile, 'SECRET_KEY');
+      /* ADD user token */
+      Users[i].token = jwtToken;
+      res.send("User Approved");
+    } else if(Users[i].username === req.body.username && Users[i].token) {
       res.send("User Already Approved!");
-    } else {
-      userIndex = i;
     }
   }
 
-  /* sending the profile in the token */
-  var jwtToken = jwt.sign(profile, 'SECRET_KEY');
+});
 
-  /* ADD user token */
-  Users[userIndex].token = jwtToken;
+/* REJECT REQUEST FOR A USER */
+router.post('/reject', function (req, res) {
 
-  res.send("User Approved");
+  /* AUTHENTICATE ADMIN */
+  // var adminIdentity = adminAuth();
+  // var requestIdentity = req.connection.remoteAddress;
+  
+  // var flag = 0;
+  // for(var i=0; i<adminIdentity.length; i++) {
+  //   if(adminIdentity[i] === requestIdentity.split(":")[3]) {
+  //     flag = 1;
+  //   }
+  // }
+  
+  // if(!flag) {
+  //   res.send("Only Admin can do this!");
+  // }
+
+  /* GET username */
+  var profile = {
+    username: req.body.username
+  };
+
+  /* CHECK if username exist */
+  if(!Users.length) {
+    res.send("Invalid Request!");
+  }
+
+  for(var i=0; i<Users.length; i++) {
+    if(Users[i].username === profile.username) {
+      Users = Users.slice(0, i);
+      console.log(Users);
+      res.send("User Rejected");
+    } else {
+      res.send("Error!");
+    }
+  }
 
 });
 
 /* VERIFY ACCESS FOR A USER */
 router.post('/verify', function (req,res) {
+
+  try {
 
   /* GET username */
   var profile = {
@@ -147,50 +188,44 @@ router.post('/verify', function (req,res) {
       }
     });
   }
-  var userIndex = 0;
+  
   for(var i=0; i<Users.length; i++) {
-    if(!(Users[i].username === req.body.username)) {
+    if(Users[i].username === profile.username && Users[i].token) {
+      /* SEND request token */
       res.json({
-        "success": false,
-        "error": true,
+        "success": true,
+        "error": false,
+        "message": {
+          "token": Users[i].token,
+          "verified": true,
+          "username": profile.username
+        },
+      });
+    } else if(Users[i].username === profile.username && !Users[i].token){
+      res.json({
+        "success": true,
+        "error": false,
         "message": {
           "verified": false
         }
       });
-      return;
-    } else {
-      userIndex = i;
     }
   }
 
-  /* GET request token */
-  var jwtToken = Users[userIndex].token;
-  if(!jwtToken) {
-    res.json({
-      "success": true,
-      "error": false,
-      "message": {
-        "verified": false
-      },
-    });
-    return;
-  }
+  /* Username not found */
+  res.redirect('/');
 
-  /* SEND request token */
-  res.json({
-    "success": true,
-    "error": false,
-    "message": {
-      "token": jwtToken,
-      "verified": true
-    },
-  });
+} catch (err) {
+  res.send(err);
+}
+
 });
 
 /* Client Index Page */
 router.post('/client', async function (req, res) {
 
   /* Get token */
+  var username = req.body.username;
   var token = req.body.token;
   
   /* Check if token supplied */
@@ -198,16 +233,18 @@ router.post('/client', async function (req, res) {
     res.send("Token Not Found");
   }
 
-  /* Return */
-  // res.json({
-  //   "success":true,
-  //   "error":false,
-  //   "message": {
-  //     "token": token,
-  //   }
-  // });
+  for(var i=0; i<Users.length; i++) {
+    if(Users[i].username === username && Users[i].token && Users[i].token === token) {
+      res.render('client');
+    }
+  }
 
-  res.render('client');
+  res.redirect('/');
+});
+
+/* ADMIN */
+router.get('/admin', function(req, res, next) {
+  res.render('admin', { users: Users });
 });
 
 module.exports = router;
