@@ -6,38 +6,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>JustShareIt | Client</title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-              <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                  <div class="container-fluid">
-                      <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                          <div class="input-group">
-                              <input name="t1" type="text" class="t1 bg-light form-control border-0 small" placeholder="Search for ..." />
-                              <input name="b1" type="submit" value="Find" hidden/>
-                          </div>
-                      </form>
-                  </div>
-              </nav>
-              <div class="container-fluid">
-                  <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                      <h3 class="text-dark mb-0">Dashboard</h3>
-                  </div>
-                  
-                  <div class="row" id="file-zone"></div>
+    <div id="wrapper content-wrapper">
+        <div class="d-flex flex-column">
+                <div class="container container-fluid">
+                    <div style="text-align: center; margin-bottom: 2%;">
+                        <img src="https://raw.githubusercontent.com/adisakshya/JustShareIt/master/webserver/static/img/logo.png?token=AKXRM5VLR2QKYOTUH2VPINC574NDS" height="150px" class="rounded-circle" />
+                    </div>
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <h1 class="text-dark mb-4" style="margin:auto">Welcome Username!</h1>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                            <div class="card border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <span>Received</span>
+                                                <br/>
+                                                <span id="received">0</span> MB
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-download fa-3x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                            <div class="card border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <span>Files</span>
+                                                <br/>
+                                                <span id="files">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-file fa-3x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                            <div class="card border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                    <div class="input-group">
+                                                        <input name="t1" type="text" class="t1 bg-light form-control border-1 large" placeholder="Search received files..." />
+                                                        <input name="b1" type="submit" value="Find" hidden/>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-search fa-3x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-              </div>
-            </div>
+                    <hr style="border: 1px solid" />
+
+                    <!-- <div style="text-align: center;">
+                        <a class="btn btn-circle" role="button" href="#file-zone">
+                            <i class="fa fa-angle-double-down"></i>
+                        </a>
+                    </div> -->
+
+                </div>
         </div>
-        <a class="border rounded d-inline scroll-to-top" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
     </div>
+
+    <div class="row" id="file-zone" style="margin-top:2%;"></div>
 
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
