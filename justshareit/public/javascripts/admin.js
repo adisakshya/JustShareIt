@@ -101,16 +101,18 @@ function fileDragHover(e) {
 
 	function parseOutput(file) {
 		var html = `
-        <div class="col-md-6 col-xl-3 mb-4">
-            <div class="card shadow border-left-primary py-2">
+        <div class="col-md-6 mb-4" style="min-width:100%;">
+            <div class="card border-left-primary py-2">
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col mr-2">
                             <div class="text-dark font-weight-bold h5 mb-0">
                                 <span>` + file.name + `</span>
-                                <br/>
+                            </div>
+                        </div>
+                        <div class="col mr-2" style="text-align:right">
+                            <div class="text-dark font-weight-bold h5 mb-0">
                                 <span>` + (file.size / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
-                                <br/>
                             </div>
                         </div>
                     </div>

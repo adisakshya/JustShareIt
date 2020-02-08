@@ -2,14 +2,93 @@
 <html>
   <head>
     <title>JustShareIt | Admin</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/form.css' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
   </head>
   
   <body>
 
-      <div class="container">
+    <section id="header" style="margin-top:3%;">
+      
+      <div id="wrapper content-wrapper">
+        <div class="d-flex flex-column">
+                <div class="container container-fluid">
+                    <div style="text-align: center; margin-bottom: 2%;">
+                        <img src="https://raw.githubusercontent.com/adisakshya/JustShareIt/master/webserver/static/img/logo.png?token=AKXRM5VLR2QKYOTUH2VPINC574NDS" height="150px" class="rounded-circle" />
+                    </div>
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <h1 class="text-dark mb-4" style="margin:auto">Welcome Admin!</h1>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                            <div class="card border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <span>Sent</span>
+                                                <br/>
+                                                <span id="received">0</span> MB
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-upload fa-3x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                            <div class="card border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <span>Files</span>
+                                                <br/>
+                                                <span id="files">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-file fa-3x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                            <div class="card border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                    <div class="input-group">
+                                                        <input name="t1" type="text" class="t1 bg-light form-control border-1 large" placeholder="Search sent files..." />
+                                                        <input name="b1" type="submit" value="Find" hidden/>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-search fa-3x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border: 1px solid" />
+
+                </div>
+        </div>
+    </div>
+    
+    <div class="container">
+
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#request">Users Requests</button>
         <div class="modal fade" id="request" role="dialog">
           <div class="modal-dialog">
@@ -65,32 +144,36 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
-            
           </div>
         </div>
 
       </div>
+    </section>
 
 
-    <form id="file-upload-form">
-      <input id="file-upload" type="file" name="fileUpload" multiple/>
-      <label for="file-upload" id="file-drag">
-        <span style="display: block;">
-          <i class="fa fa-cloud-upload fa-4x"></i>
-        </span>
-        <br />
-        <span style="font-size: 25px;">
-          DRAG & DROP
-          <br />or
-        </span>
-        <br />
-        <span id="file-upload-btn" class="button">Click to browse</span>
-      </label>
+    <section id="upload-form" style="margin-top:3%;">
 
-      <hr style="border: 1px solid black" />
-      
-      <div class="row" id="file-zone"></div>
-    </form>
+      <form id="file-upload-form">
+        <input id="file-upload" type="file" name="fileUpload" multiple/>
+        <label for="file-upload" id="file-drag">
+          <span style="display: block;">
+            <i class="fa fa-cloud-upload fa-4x"></i>
+          </span>
+          <br />
+          <span style="font-size: 25px;">
+            DRAG & DROP
+            <br />or
+          </span>
+          <br />
+          <span id="file-upload-btn" class="button">Click to browse</span>
+        </label>
+
+        <hr style="border: 1px solid black" />
+        
+        <div class="row" id="file-zone"></div>
+      </form>
+
+    </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
