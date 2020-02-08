@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var adminAuth = require('../utils/adminAuth');
+var qr = require('qr-image');  
+var os = require('os');
+var ifaces = os.networkInterfaces();
+
 
 /* Users */
 const USER_LIMIT = 100000;
@@ -245,6 +249,22 @@ router.post('/client', async function (req, res) {
 /* ADMIN */
 router.get('/admin', function(req, res, next) {
   res.render('admin', { users: Users });
+});
+
+/* QR Code */
+router.get('/qr', function(req, res) {
+  Object.keys(ifaces).forEach(function (ifname) {
+    if(ifname === 'Wi-Fi') {
+      ifaces[ifname].forEach(function (iface) {
+        if ('IPv4' !== iface.family || iface.internal !== false) {
+          return;
+        }
+        var code = qr.image(new URL('http://'+iface.address+':3000').toString(), { type: 'svg' });
+        res.type('svg');
+        code.pipe(res);
+      });
+    }
+  });
 });
 
 module.exports = router;

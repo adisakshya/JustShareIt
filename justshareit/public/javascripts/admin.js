@@ -146,8 +146,8 @@ function approveVisiter(visiterName) {
     }
   
     $.ajax(settings).done(function (response) {
-      console.log(response);
       alert("User Approved!");
+      location.reload();
       return false;
     });
 
