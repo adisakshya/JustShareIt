@@ -8,8 +8,10 @@ const socket = io().connect();
 /* connect to socket server */
 socket.emit('create');
 
+socket.emit('get files');
+
 socket.on('already transfered', function () {
-	console.log("File already transfered!");
+	alert("File already transfered!");
 });
 
 (function() {
@@ -94,12 +96,12 @@ function fileDragHover(e) {
 			
 			});
 		
-			parseOutput(file);
+			parseOutput(file.name, file.size);
 		}
 		
 	}
 
-	function parseOutput(file) {
+	function parseOutput(filename, filesize) {
 		var html = `
         <div class="col-md-6 mb-4" style="min-width:100%;">
             <div class="card border-left-primary py-2">
@@ -107,12 +109,12 @@ function fileDragHover(e) {
                     <div class="row align-items-center no-gutters">
                         <div class="col mr-2">
                             <div class="text-dark font-weight-bold h5 mb-0">
-                                <span>` + file.name + `</span>
+                                <span>` + filename + `</span>
                             </div>
                         </div>
                         <div class="col mr-2" style="text-align:right">
                             <div class="text-dark font-weight-bold h5 mb-0">
-                                <span>` + (file.size / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
+                                <span>` + (filesize / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
                             </div>
                         </div>
                     </div>
@@ -122,12 +124,18 @@ function fileDragHover(e) {
 		html = $.parseHTML( html);
         $("#file-zone").append(html);
         
-        var received = parseFloat(document.getElementById("received").innerHTML) + parseFloat((file.size / (1024 * 1024)).toFixed(2));
+        var received = parseFloat(document.getElementById("received").innerHTML) + parseFloat((filesize / (1024 * 1024)).toFixed(2));
         document.getElementById("received").innerHTML = received;
 
         document.getElementById("files").innerHTML = parseInt(document.getElementById("files").innerHTML)+1;
 
-	}
+    }
+    
+    socket.on('shared files', function (files) {
+        for(var file in files) {
+            parseOutput(file, files[file]);
+        }
+    });
 	    
     // Check for the various File API support.
     if (window.File && window.FileList && window.FileReader) {

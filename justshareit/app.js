@@ -94,6 +94,14 @@ io.on('connection', function (socket) {
 
   });
 
+  socket.on('get files', function () {
+    var filelist = {};
+    for(var file in files) {
+      filelist[file] = files[file].size;
+    }
+    socket.emit('shared files', filelist);
+  });
+
   /* on disconnect */
   socket.on("disconnect", function () {
     console.log("SOCKET a user disconnected");
