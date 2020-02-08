@@ -1,8 +1,3 @@
-/**
- * Drag & Drop Pen by Ushinro
- * https://codepen.io/Ushinro/pen/NPQzOx
- */
-
 const socket = io().connect();
 
 /* connect to socket server */
@@ -29,48 +24,48 @@ socket.on('already transfered', function () {
 		
 	}
 
-function parseFile(file, callback) {
-    var fileSize   = file.size;
-    var chunkSize  = 64 * 1024; // bytes
-    var offset     = 0;
-    var self       = this; // we need a reference to the current object
-	var chunkReaderBlock = null;
-	
-    var readEventHandler = function(evt) {
-        if (evt.target.error == null && evt.target.result.byteLength) {
-            offset += evt.target.result.byteLength;
-            callback(evt.target.result, file.name, file.type, file.size); // callback for handling read chunk
-        } else {
-            console.log("Read error: " + evt.target.error);
-            return;
-        }
-        if (offset >= fileSize) {
-            console.log("Done reading file");
-            return;
+    function parseFile(file, callback) {
+        var fileSize   = file.size;
+        var chunkSize  = 64 * 1024; // bytes
+        var offset     = 0;
+        var self       = this; // we need a reference to the current object
+        var chunkReaderBlock = null;
+        
+        var readEventHandler = function(evt) {
+            if (evt.target.error == null && evt.target.result.byteLength) {
+                offset += evt.target.result.byteLength;
+                callback(evt.target.result, file.name, file.type, file.size); // callback for handling read chunk
+            } else {
+                console.log("Read error: " + evt.target.error);
+                return;
+            }
+            if (offset >= fileSize) {
+                console.log("Done reading file");
+                return;
+            }
+
+            // of to the next chunk
+            chunkReaderBlock(offset, chunkSize, file);
         }
 
-        // of to the next chunk
+        chunkReaderBlock = function(_offset, length, _file) {
+            let r = new FileReader();
+            var blob = _file.slice(_offset, length + _offset);
+            r.onload = readEventHandler;
+            r.readAsArrayBuffer(blob);
+        }
+
+        // now let's start the read with the first block
         chunkReaderBlock(offset, chunkSize, file);
     }
 
-    chunkReaderBlock = function(_offset, length, _file) {
-        let r = new FileReader();
-        var blob = _file.slice(_offset, length + _offset);
-        r.onload = readEventHandler;
-        r.readAsArrayBuffer(blob);
-    }
+    function fileDragHover(e) {
+        var fileDrag = document.getElementById('file-drag');
 
-    // now let's start the read with the first block
-    chunkReaderBlock(offset, chunkSize, file);
-}
-
-function fileDragHover(e) {
-		var fileDrag = document.getElementById('file-drag');
-
-		e.stopPropagation();
-		e.preventDefault();
-		
-		fileDrag.className = (e.type === 'dragover' ? 'hover' : 'modal-body file-upload');
+        e.stopPropagation();
+        e.preventDefault();
+        
+        fileDrag.className = (e.type === 'dragover' ? 'hover' : 'modal-body file-upload');
 	}
 
 	async function fileSelectHandler(e) {
@@ -169,7 +164,6 @@ function approveVisiter(visiterName) {
 }
 
 function rejectVisiter(visiterName, token) {
-    console.log(visiterName);
     var settings = {
       "async": false,
       "crossDomain": true,
@@ -183,9 +177,7 @@ function rejectVisiter(visiterName, token) {
     }
   
     $.ajax(settings).done(function (response) {
-      console.log(response);
       alert("User Rejected!");
       return false;
     });
-
 }

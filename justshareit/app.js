@@ -1,16 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var fs = require('fs');
-var socket = require('socket.io');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const fs = require('fs');
+const socket = require('socket.io');
 
-var usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
-// view engine setup
+/* view engine setup */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -22,12 +22,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', usersRouter);
 
-// catch 404 and forward to error handler
+/* catch 404 and forward to error handler */
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+/* error handler */
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -38,25 +38,27 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Sockets Setup
-var io = socket();
+/* Sockets Setup */
+const io = socket();
 app.io = io;
 
+/* File Structure */
 var files = {}, 
   struct = { 
-      name: null, 
-      type: null, 
-      size: 0, 
-      data: [], 
-      slice: 0, 
-      currentSize: 0
-};
+    name: null, 
+    type: null, 
+    size: 0, 
+    data: [], 
+    slice: 0, 
+    currentSize: 0
+  };
 
+/* On Connection */
 io.on('connection', function (socket) {
 
   /* a new user connected */
   socket.on("create", function () {
-    console.log("SOCKET a new user connected");
+    console.log("[SOCKET] => a new user connected");
   });
 
   /* file slice received from admin */
@@ -71,6 +73,7 @@ io.on('connection', function (socket) {
 
     /* if file has already been transfered */
     if (files[data.name] && files[data.name].currentSize == files[data.name].size && files[data.name].type == data.type) {
+      /* Emit already transfered */
       socket.emit('already transfered');
       return;
     }
@@ -86,6 +89,8 @@ io.on('connection', function (socket) {
         // fs.writeFile('tmp/'+data.name, fileBuffer, (err) => { 
         //     if (err) console.log('Error:', err); 
         // });
+
+        /* Emit upload complete */
         socket.emit('upload complete', data.name);
     }
     
@@ -94,17 +99,19 @@ io.on('connection', function (socket) {
 
   });
 
+  /* Admin request list of files shared */
   socket.on('get files', function () {
     var filelist = {};
     for(var file in files) {
       filelist[file] = files[file].size;
     }
+    /* Emit shared files information */
     socket.emit('shared files', filelist);
   });
 
   /* on disconnect */
   socket.on("disconnect", function () {
-    console.log("SOCKET a user disconnected");
+    console.log("[SOCKET] => a user disconnected");
   });
 
 });

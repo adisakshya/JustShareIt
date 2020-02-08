@@ -1,4 +1,4 @@
-#mySidenav a {
+#sidenav a {
     position: absolute;
     left: -10px;
     transition: 0.3s;
@@ -10,7 +10,7 @@
     border-radius: 0 5px 5px 0;
   }
   
-  #mySidenav a:hover {
+  #sidenav a:hover {
     left: 0;
   }
   

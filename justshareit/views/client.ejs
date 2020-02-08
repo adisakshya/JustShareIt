@@ -14,83 +14,77 @@
 <body id="page-top">
     <div id="wrapper content-wrapper">
         <div class="d-flex flex-column">
-                <div class="container container-fluid">
-                    <div style="text-align: center; margin-bottom: 2%;">
-                        <img src="https://raw.githubusercontent.com/adisakshya/JustShareIt/master/webserver/static/img/logo.png?token=AKXRM5VLR2QKYOTUH2VPINC574NDS" height="150px" class="rounded-circle" />
-                    </div>
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <h1 class="text-dark mb-4" style="margin:auto" id="welcome"></h1>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
-                            <div class="card border-left-success py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-dark font-weight-bold h5 mb-0">
-                                                <span>Received</span>
-                                                <br/>
-                                                <span id="received">0</span> MB
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-download fa-3x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
-                            <div class="card border-left-success py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-dark font-weight-bold h5 mb-0">
-                                                <span>Files</span>
-                                                <br/>
-                                                <span id="files">0</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-file fa-3x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
-                            <div class="card border-left-success py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-dark font-weight-bold h5 mb-0">
-                                                <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                                    <div class="input-group">
-                                                        <input name="t1" type="text" class="t1 bg-light form-control border-1 large" placeholder="Search received files..." />
-                                                        <input name="b1" type="submit" value="Find" hidden/>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-search fa-3x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr style="border: 1px solid" />
-
-                    <!-- <div style="text-align: center;">
-                        <a class="btn btn-circle" role="button" href="#file-zone">
-                            <i class="fa fa-angle-double-down"></i>
-                        </a>
-                    </div> -->
-
+            <div class="container container-fluid">
+                <div style="text-align: center; margin-bottom: 2%;">
+                    <img src="https://raw.githubusercontent.com/adisakshya/JustShareIt/master/webserver/static/img/logo.png?token=AKXRM5VLR2QKYOTUH2VPINC574NDS" height="150px" class="rounded-circle" />
                 </div>
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h1 class="text-dark mb-4" style="margin:auto" id="welcome"></h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                        <div class="card border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <span>Received</span>
+                                            <br/>
+                                            <span id="received">0</span> MB
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-download fa-3x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                        <div class="card border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <span>Files</span>
+                                            <br/>
+                                            <span id="files">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-file fa-3x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-4" style="margin:auto;">
+                        <div class="card border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <form name="f1" id="f1" action="" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                <div class="input-group">
+                                                    <input name="t1" type="text" class="t1 bg-light form-control border-1 large" placeholder="Search received files..." />
+                                                    <input name="b1" type="submit" value="Find" hidden/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-search fa-3x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="border: 1px solid" />
+                
+            </div>
         </div>
     </div>
 
