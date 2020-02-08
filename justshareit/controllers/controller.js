@@ -5,7 +5,8 @@ const ifaces = os.networkInterfaces();
 
 /* Temporary User Store */
 const USER_LIMIT = 500000;
-var Users = {};
+const { Users } = require('../utils/users');
+var users = new Users();
 
 /**
  * 
@@ -24,7 +25,7 @@ const loginIndex = (req, res) => {
  */
 const userRequests = (req, res) => {
     /* Check maximum user limit */
-    if(Object.keys(Users).length >= USER_LIMIT) {
+    if(users.getTotalUsers() >= USER_LIMIT) {
       res.json({
         "success": false,
         "error": true,
@@ -48,7 +49,7 @@ const userRequests = (req, res) => {
     }
 
     /* Check for duplicate username */
-    if(Users[profile.username]) {
+    if(users.getUser(profile.username)) {
       res.json({
         "success": false,
         "error": true,
@@ -56,9 +57,8 @@ const userRequests = (req, res) => {
       });
     } else {
       /* CREATE new user */
-      Users[profile.username] = {
-        "token": null
-      }
+      users.addUser(profile.username);
+      
       /* Return response */
       res.json({
         "success": true,
@@ -81,7 +81,7 @@ const usersList = (req, res) => {
         "success": true,
         "error": false,
         "message": {
-          "users": Users
+          "users": users.getUserList()
         }
       });
 };
@@ -108,14 +108,26 @@ const approveUser = (req, res) => {
       }
   
       /* CHECK if username exist */
-      if(Users[profile.username] && Users[profile.username].token) {
-        res.send("User Already Approved!");
-      } else if(Users[profile.username] && !Users[profile.username].token) {
+      if(users.getRequestStatus(profile.username)) {
+        res.json({
+          "success": true,
+          "error": false,
+          "message": "User already approved."
+        });
+        return;
+      } else if(users.getRequestStatus(profile.username) === -1) {
+        res.json({
+          "success": false,
+          "error": true,
+          "message": "Username doesn't exist!"
+        });
+        return;
+      } else {
         /* sending the profile in the token */
         var jwtToken = jwt.sign(profile, 'SECRET_KEY');
         /* ADD user token */
-        Users[profile.username].token = jwtToken;
-        res.send("User Approved");
+        users.updateRequest(profile.username, jwtToken)
+        res.send("User Approved.");
       }
 };
 
@@ -141,9 +153,9 @@ const rejectUser = (req, res) => {
     }
 
     /* CHECK if username exist */
-    if(Users[profile.username]) {
-      delete Users[profile.username];
-      res.send("User Rejected");
+    if(users.getUser(profile.username)) {
+      users.removeUser(profile.username);
+      res.send("User Rejected.");
     }
 };
 
@@ -169,19 +181,28 @@ const verifyUser = (req, res) => {
     }
 
     /* CHECK if username exist or is already verified */
-    if(Users[profile.username] && Users[profile.username].token) {
+    if(!users.getUser(profile.username)) {
+      /* Username not found */
+      res.json({
+        "success": false,
+        "error": true,
+        "message": "Username not found!"
+      });
+    } 
+    
+    if(users.getRequestStatus(profile.username)) {
       /* SEND request token */
       res.json({
         "success": true,
         "error": false,
         "message": {
-          "token": Users[profile.username].token,
+          "token": users.getUser(profile.username).token,
           "verified": true,
           "username": profile.username
         },
       });
       return;
-    } else if(Users[profile.username] && !Users[profile.username].token) {
+    } else {
       res.json({
         "success": true,
         "error": false,
@@ -191,13 +212,6 @@ const verifyUser = (req, res) => {
       });
       return;
     }
-
-    /* Username not found */
-    res.json({
-      "success": false,
-      "error": true,
-      "message": "Username not found!"
-    });
 };
 
 /**
@@ -226,12 +240,12 @@ const clientIndex = (req, res) => {
     }
 
     /* If user is verified then render client page */
-    if(Users[username] && Users[username].token && Users[username].token === token) {
+    if(users.getRequestStatus(username)) {
       res.render('client');
+    } else {
+      /* User not verified */
+      res.redirect('/');
     }
-
-    /* User not verified */
-    res.redirect('/');
 };
 
 /**
@@ -240,7 +254,7 @@ const clientIndex = (req, res) => {
  * @param {object} res 
  */
 const adminIndex = (req, res) => {
-    res.render('admin', { users: Users });
+    res.render('admin', { "users": users.getUserList() });
 };
 
 /**

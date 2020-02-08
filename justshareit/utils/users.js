@@ -1,31 +1,102 @@
 class Users {
+    
+    /**
+     * Constructor
+     */
     constructor() {
-        this.users = [];
+        this.users = {};
     }
-    addUser(id, name, request) {
-        var user = { id, name, request };
-        this.users.push(user);
+    
+    /**
+     * CREATE a new user
+     * @param {string} username 
+     * @param {number} id : Can represent boolean 'false' also
+     * @param {Boolean} vstatus : Verification Status
+     * @param {string} token : Auth Token
+     * @return {object}
+     */
+    addUser(username, id=false, vstatus=false, token=null) {
+        var user = { id, username, vstatus, token };
+        this.users[username] = {
+            "id": id,
+            "vstatus": vstatus,
+            "token": token
+        }
         return user;
     }
-    getUser(id) {
-        return this.users.filter((user) => user.id === id)[0];
+    
+    /**
+     * GET user details by username
+     * @param {string} username
+     * @return {object} 
+     */
+    getUser(username) {
+        return this.users[username];
     }
-    getRequestStatus(id) {
-        return this.users.filter((user) => user.id === id && user.request === true)[0];
-    }
-    removeUser(id) {
-        var user = this.getUser(id);
 
-        if (user) {
-            this.users = this.users.filter((user) => user.id !== id);
+    /**
+     * GET user verification status by username
+     * @param {string} username 
+     * @return {Boolean}
+     */
+    getRequestStatus(username) {
+        var user = this.getUser(username);
+
+        if(user) { 
+            return this.users[username].vstatus;
+        }
+
+        return false;
+    }
+
+    /**
+     * UPDATE user verification details
+     * @param {string} username 
+     * @param {string} token 
+     */
+    updateRequest(username, token) {
+        var user = this.getUser(username);
+
+        if(user && !user.vstatus && !user.token) {
+            this.users[username].vstatus = true;
+            this.users[username].token = token;
         }
 
         return user;
     }
-    getUserList() {
-        var namesArray = this.users.map((user) => user.name);
 
-        return namesArray;
+    /**
+     * REMOVE a user by username
+     * @param {string} username 
+     */
+    removeUser(username) {
+        var user = this.getUser(username);
+
+        if (user) {
+            delete this.users[username]
+        }
+
+        return user;
+    }
+
+    /**
+     * GET details of all users
+     */
+    getUserList() {
+        var list = {};
+        
+        Object.keys(this.users).forEach(user => {
+            list[user] = this.users[user].vstatus;
+        });
+
+        return list;
+    }
+
+    /**
+     * GET number of users
+     */
+    getTotalUsers() {
+        return Object.keys(this.users).length;
     }
 }
 
