@@ -4,10 +4,20 @@
     <title>JustShareIt | Admin</title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/form.css' />
+    <link rel='stylesheet' href='/stylesheets/sidenav.css' />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
   </head>
   
   <body>
+
+    <section id="sidenav">
+
+      <div id="mySidenav" class="sidenav">
+        <a href="#" id="users" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#request"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
+        <a href="#" id="mobile" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#qr"><i class="fa fa-mobile fa-2x" aria-hidden="true"></i></a>
+      </div>
+
+    </section>
 
     <section id="header" style="margin-top:3%;">
       
@@ -89,7 +99,6 @@
     
     <div class="container">
 
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#request">Users Requests</button>
         <div class="modal fade" id="request" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -130,7 +139,6 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#qr">Mobile Devices</button>
         <div class="modal fade" id="qr" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -138,7 +146,7 @@
                 <h4 class="modal-title">Scan the QR Code to connect</h4>
               </div>
               <div class="modal-body" style="text-align: center;">
-                <img src="http://localhost:3000/qr" height="450px" />
+                <img src="http://localhost:3000/qr" height="450px" alt="QR Code"/>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

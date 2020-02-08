@@ -1,0 +1,25 @@
+#mySidenav a {
+    position: absolute;
+    left: -10px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 80px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  #mySidenav a:hover {
+    left: 0;
+  }
+  
+  #users {
+    top: 20px;
+    background-color: #4CAF50;
+  }
+  
+  #mobile {
+    top: 100px;
+    background-color: #2196F3;
+  }
