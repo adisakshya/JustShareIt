@@ -263,6 +263,7 @@ router.get('/qr', function(req, res) {
         res.type('svg');
         code.pipe(res);
       });
+      return;
     }
   });
 });
