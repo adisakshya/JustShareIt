@@ -119,9 +119,14 @@ function fileDragHover(e) {
                 </div>
             </div>
         </div>`;
-		// var html =  '<div style="border:1px solid black; width:fit-content; padding:5px;"><strong>' + file.name + '</strong><p>' + (file.size / (1024 * 1024)).toFixed(2) + '&nbsp MB</p></div>';
 		html = $.parseHTML( html);
-		$("#file-zone").append(html);
+        $("#file-zone").append(html);
+        
+        var received = parseFloat(document.getElementById("received").innerHTML) + parseFloat((file.size / (1024 * 1024)).toFixed(2));
+        document.getElementById("received").innerHTML = received;
+
+        document.getElementById("files").innerHTML = parseInt(document.getElementById("files").innerHTML)+1;
+
 	}
 	    
     // Check for the various File API support.

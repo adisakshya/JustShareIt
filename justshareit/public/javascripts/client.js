@@ -74,8 +74,6 @@ socket.on('send slice', function (data) {
         var received = parseFloat(document.getElementById("received").innerHTML) + parseFloat((file.size / (1024 * 1024)).toFixed(2));
         document.getElementById("received").innerHTML = received;
 
-        console.log(received);
-
         document.getElementById("files").innerHTML = parseInt(document.getElementById("files").innerHTML)+1;
         
         var link=document.createElement('a');
