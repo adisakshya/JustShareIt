@@ -107,29 +107,30 @@
               </div>
               <div class="modal-body">
                 <ol class="list-group" id="user-requests">
-                  <% for(var i=0; i < users.length; i++) { %>
+                  <%  Object.keys(users).forEach(function (user) { %>
                     <li class="list-group-item" style="margin-bottom: 2%;padding-bottom: 3%;">
-                      <span style="font-size:22px"><%= users[i].username %></span>
-                      <% if(users[i].token){ %>
+                      <span style="font-size:22px"><%= user %></span>
+                      
+                      <% if(users[user].token){ %>
                         <span>
                           <p style="float:right;color:green;font-size: 22px;">
                             Approved
                           </p>
                         </span>
                       <% } else{ %>
-                        <form onsubmit="rejectVisiter('<%= users[i].username %>')" style="float:right;">
+                        <form onsubmit="rejectVisiter('<%= user %>')" style="float:right;">
                           <button type="submit" class="btn btn-danger">
                             Reject
                           </button>
                         </form>
-                        <form onsubmit="approveVisiter('<%= users[i].username %>')" style="float:right;margin-right: 2%;">
+                        <form onsubmit="approveVisiter('<%= user %>')" style="float:right;margin-right: 2%;">
                           <button type="submit" class="btn btn-success">
                             Approve
                           </button>
                         </form>
                       <% } %>
                     </li>
-                <% } %>
+                  <% }) %>
                 </ol>
               </div>
               <div class="modal-footer">

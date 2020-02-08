@@ -1,17 +1,20 @@
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
-var qr = require('qr-image');  
-var os = require('os');
-var ifaces = os.networkInterfaces();
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const qr = require('qr-image');  
+const os = require('os');
+const ifaces = os.networkInterfaces();
 
 /* Users */
-const USER_LIMIT = 100000;
-var Users = [];
+const USER_LIMIT = 500000;
+var Users = {};
 
 /* GET user home page. */
 router.route('/')
   .get(function (req, res) {
+    res.render('login', { requested: false });
+  })
+  .post(function (req, res) {
     res.render('login', { requested: false });
   });
 
@@ -19,7 +22,7 @@ router.route('/')
 router.route('/request')
   .post(function (req, res) {
     /* CHECK user limit */
-    if(Users.length >= USER_LIMIT) {
+    if(Object.keys(Users).length >= USER_LIMIT) {
       res.json({
         "success": false,
         "error": true,
@@ -43,29 +46,26 @@ router.route('/request')
     }
 
     /* Check for duplicate username */
-    for(var i=0; i<Users.length; i++) {
-      if(Users[i].username === req.body.username) {
-        res.json({
-          "success": false,
-          "error": true,
-          "message": "User Already Exists! Please choose another username"
-        });
-        return;
+    if(Users[profile.username]) {
+      res.json({
+        "success": false,
+        "error": true,
+        "message": "User Already Exists! Please choose another username"
+      });
+    } else {
+      /* CREATE new user */
+      Users[profile.username] = {
+        "token": null
       }
+      /* Return response */
+      res.json({
+        "success": true,
+        "error": false,
+        "message": {
+          "username": profile.username
+        }
+      });
     }
-    
-    /* CREATE new user */
-    var newUser = { username: req.body.username };
-    Users.push(newUser);
-    
-    /* Return response */
-    res.json({
-      "success": true,
-      "error": false,
-      "message": {
-        "username": newUser.username
-      }
-    });
   });
 
 /* GET LIST OF USERS */
@@ -100,19 +100,14 @@ router.route('/approve')
     }
 
     /* CHECK if username exist */
-    if(!Users.length) {
-      res.send("Invalid Request!");
-    }
-    for(var i=0; i<Users.length; i++) {
-      if(Users[i].username === req.body.username && !Users[i].token) {
-        /* sending the profile in the token */
-        var jwtToken = jwt.sign(profile, 'SECRET_KEY');
-        /* ADD user token */
-        Users[i].token = jwtToken;
-        res.send("User Approved");
-      } else if(Users[i].username === req.body.username && Users[i].token) {
-        res.send("User Already Approved!");
-      }
+    if(Users[profile.username] && Users[profile.username].token) {
+      res.send("User Already Approved!");
+    } else if(Users[profile.username] && !Users[profile.username].token) {
+      /* sending the profile in the token */
+      var jwtToken = jwt.sign(profile, 'SECRET_KEY');
+      /* ADD user token */
+      Users[profile.username].token = jwtToken;
+      res.send("User Approved");
     }
   });
 
@@ -135,15 +130,9 @@ router.route('/reject')
     }
 
     /* CHECK if username exist */
-    if(!Users.length) {
-      res.send("Invalid Request!");
-    }
-    for(var i=0; i<Users.length; i++) {
-      if(Users[i].username === profile.username) {
-        Users = Users.slice(0, i);
-        console.log(Users);
-        res.send("User Rejected");
-      }
+    if(Users[profile.username]) {
+      delete Users[profile.username];
+      res.send("User Rejected");
     }
   });
 
@@ -166,40 +155,35 @@ router.route('/verify')
     }
 
     /* CHECK if username exist or is already verified */
-    if(!Users.length) {
+    if(Users[profile.username] && Users[profile.username].token) {
+      /* SEND request token */
       res.json({
-        "success": false,
-        "error": true,
+        "success": true,
+        "error": false,
+        "message": {
+          "token": Users[profile.username].token,
+          "verified": true,
+          "username": profile.username
+        },
+      });
+      return;
+    } else if(Users[profile.username] && !Users[profile.username].token) {
+      res.json({
+        "success": true,
+        "error": false,
         "message": {
           "verified": false
         }
       });
-    }
-    for(var i=0; i<Users.length; i++) {
-      if(Users[i].username === profile.username && Users[i].token) {
-        /* SEND request token */
-        res.json({
-          "success": true,
-          "error": false,
-          "message": {
-            "token": Users[i].token,
-            "verified": true,
-            "username": profile.username
-          },
-        });
-      } else if(Users[i].username === profile.username && !Users[i].token){
-        res.json({
-          "success": true,
-          "error": false,
-          "message": {
-            "verified": false
-          }
-        });
-      }
+      return;
     }
 
     /* Username not found */
-    res.redirect('/');
+    res.json({
+      "success": false,
+      "error": true,
+      "message": "Username not found!"
+    });
   });
 
 /* Client Index Page */
@@ -225,10 +209,8 @@ router.route('/client')
     }
 
     /* If user is verified then render client page */
-    for(var i=0; i<Users.length; i++) {
-      if(Users[i].username === username && Users[i].token && Users[i].token === token) {
-        res.render('client');
-      }
+    if(Users[username] && Users[username].token && Users[username].token === token) {
+      res.render('client');
     }
 
     /* User not verified */
