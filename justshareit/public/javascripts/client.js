@@ -82,3 +82,12 @@ socket.on('send slice', function (data) {
         link.click();        
     }
 });
+
+$(document).ready(() => {
+    var username = sessionStorage.getItem("SessionName");
+    if(username) {
+        $("#welcome").text("Welcome " + username + "!");
+    } else {
+        alert("No username");
+    }
+})
