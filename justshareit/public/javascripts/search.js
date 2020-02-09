@@ -1,6 +1,11 @@
 var TRange = null;
 
 function findString(str) {
+
+    if(!str) {
+        alert('Empty search field!');
+    }
+
     if (parseInt(navigator.appVersion) < 4) return;
     var strFound;
     if (window.find) {
