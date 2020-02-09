@@ -45,6 +45,36 @@
         /* Progress */
         var progress = parseInt(100*(files[data.name].currentSize/files[data.name].size));
         console.log("Progress: ", progress);
+
+        /* Update file description on dashboard */
+        var temp = document.getElementById(data.name.replace(/ /g,''));
+        if(!temp) {
+            var template = `
+            <div class="col-md-6 mb-4" style="min-width:100%;>
+                <div class="card border-left-primary py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <div class="text-dark font-weight-bold h5 mb-0">
+                                    <span>` + files[data.name].name + `</span>
+                                </div>
+                            </div>
+                            <div class="col mr-2" style="text-align:right">
+                                <div class="text-dark font-weight-bold h5 mb-0">
+                                    <span>` + (files[data.name].size / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
+                                </div>
+                            </div>
+                        </div>
+                        <label id="` + data.name.replace(/ /g,'') + `-label" for=` + data.name.replace(/ /g,'') + `>` + progress + `%</label>
+                        <progress style="width:100%" id="` + data.name.replace(/ /g,'') + `" value="` + progress + `" max="100"></progress>
+                    </div>
+                </div>
+            </div>`;
+            $('#file-zone').append(template);
+        } else {
+            document.getElementById(data.name.replace(/ /g,'')).value = progress;
+            document.getElementById(data.name.replace(/ /g,'')+'-label').innerHTML = progress.toString() + '%';
+        }
         
         /* complete file received from server */
         if (files[data.name].currentSize == files[data.name].size) {
@@ -60,28 +90,6 @@
             /* create file object */
             var file = new File(buffer, files[data.name].name);
             
-            /* add file description to dasboard */
-            var template = `
-            <div class="col-md-6 mb-4" style="min-width:100%;">
-                <div class="card border-left-primary py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-dark font-weight-bold h5 mb-0">
-                                    <span>` + files[data.name].name + `</span>
-                                </div>
-                            </div>
-                            <div class="col mr-2" style="text-align:right">
-                                <div class="text-dark font-weight-bold h5 mb-0">
-                                    <span>` + (file.size / (1024 * 1024)).toFixed(2) + `&nbsp MB </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-            $('#file-zone').append(template);
-
             /* Increment received files & data */
             var received = parseFloat(document.getElementById("received").innerHTML) + parseFloat((file.size / (1024 * 1024)).toFixed(2));
             document.getElementById("received").innerHTML = received;
