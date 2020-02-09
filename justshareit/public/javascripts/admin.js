@@ -1,19 +1,23 @@
-const socket = io().connect();
-
-/* connect to socket server */
-socket.emit('create');
-
-socket.emit('get files');
-
-socket.on('already transfered', function () {
-	alert("File already transfered!");
-});
-
 (function() {
-	function Init() {
+
+    /* Connect using socket */
+	const socket = io().connect();
+
+    /* Emit create */
+    socket.emit('create');
+
+    /* Send request to get files list */
+    socket.emit('get files');
+
+    /* Alert message when file has already been transfered */
+    socket.on('already transfered', function () {
+        alert("File already transfered!");
+    });
+
+    /* Initialize file-upload */
+    function Init() {
 		var fileSelect = document.getElementById('file-upload'),
-			fileDrag = document.getElementById('file-drag'),
-			submitButton = document.getElementById('submit-button');
+			fileDrag = document.getElementById('file-drag');
 
 		fileSelect.addEventListener('change', fileSelectHandler, false);
 
@@ -21,16 +25,16 @@ socket.on('already transfered', function () {
         fileDrag.addEventListener('dragover', fileDragHover, false);
         fileDrag.addEventListener('dragleave', fileDragHover, false);
         fileDrag.addEventListener('drop', fileSelectHandler, false);
-		
 	}
 
+    /* Parse Uploaded File */
     function parseFile(file, callback) {
         var fileSize   = file.size;
         var chunkSize  = 64 * 1024; // bytes
         var offset     = 0;
-        var self       = this; // we need a reference to the current object
         var chunkReaderBlock = null;
         
+        /* Read File */
         var readEventHandler = function(evt) {
             if (evt.target.error == null && evt.target.result.byteLength) {
                 offset += evt.target.result.byteLength;
@@ -44,10 +48,11 @@ socket.on('already transfered', function () {
                 return;
             }
 
-            // of to the next chunk
+            /* Read next chunk */
             chunkReaderBlock(offset, chunkSize, file);
         }
 
+        /* Read Chunk */
         chunkReaderBlock = function(_offset, length, _file) {
             let r = new FileReader();
             var blob = _file.slice(_offset, length + _offset);
@@ -55,7 +60,7 @@ socket.on('already transfered', function () {
             r.readAsArrayBuffer(blob);
         }
 
-        // now let's start the read with the first block
+        /* Start the read with the first block */
         chunkReaderBlock(offset, chunkSize, file);
     }
 
@@ -68,10 +73,8 @@ socket.on('already transfered', function () {
         fileDrag.className = (e.type === 'dragover' ? 'hover' : 'modal-body file-upload');
 	}
 
+    /* File upload handler */
 	async function fileSelectHandler(e) {
-		// Fetch FileList object
-		var file = e.target.files;
-
 		// Cancel event and hover styling
 		fileDragHover(e);
 		
@@ -90,13 +93,14 @@ socket.on('already transfered', function () {
 				});
 			
 			});
-		
+            /* Add file to dashboard */
 			parseOutput(file.name, file.size);
 		}
-		
 	}
 
+    /* Add file description to dashboard */
 	function parseOutput(filename, filesize) {
+        /* File description template */
 		var html = `
         <div class="col-md-6 mb-4" style="min-width:100%;">
             <div class="card border-left-primary py-2">
@@ -116,23 +120,26 @@ socket.on('already transfered', function () {
                 </div>
             </div>
         </div>`;
-		html = $.parseHTML( html);
+        html = $.parseHTML( html);
+        
+        /* Add file description to dashboard */
         $("#file-zone").append(html);
         
+        /* Increment received files & data */
         var received = parseFloat(document.getElementById("received").innerHTML) + parseFloat((filesize / (1024 * 1024)).toFixed(2));
         document.getElementById("received").innerHTML = received;
 
         document.getElementById("files").innerHTML = parseInt(document.getElementById("files").innerHTML)+1;
-
     }
     
+    /* On receiving shared file list display them on dashboard */
     socket.on('shared files', function (files) {
         for(var file in files) {
             parseOutput(file, files[file]);
         }
     });
 	    
-    // Check for the various File API support.
+    /* Check for the various File API support. */
     if (window.File && window.FileList && window.FileReader) {
         Init();
     } else {
@@ -141,8 +148,8 @@ socket.on('already transfered', function () {
 
 })();
 
+/* Approve user request */
 function approveVisiter(visiterName) {
-    
     var settings = {
       "async": false,
       "crossDomain": true,
@@ -157,12 +164,13 @@ function approveVisiter(visiterName) {
   
     $.ajax(settings).done(function (response) {
       alert("User Approved!");
+      /* Reload page */
       location.reload();
       return false;
     });
-
 }
 
+/* Reject user request */
 function rejectVisiter(visiterName, token) {
     var settings = {
       "async": false,
