@@ -8,6 +8,12 @@
   </head>
   
   <body>
+    <div class="loader">
+      <div id="logo">
+        <img src="../assets/images/logo.png" height="300px" width="auto" alt="JustShareIt" />
+      </div>
+    </div>
+    
     <header id="titlebar">
       <div id="drag-region">
         <div id="window-title">
@@ -31,13 +37,16 @@
     </header>
 
     <div id="main">
-      <div id="logo">
-        <img src="../assets/images/logo.png" height="300px" width="auto" alt="JustShareIt" />
-      </div>
+      <h1>Hello World!</h1>
     </div>
 
     <script>
       require('../renderer.js')
+      window.addEventListener("load", async function () {
+          await new Promise(r => setTimeout(r, 3500));
+          const loader = document.querySelector(".loader");
+          loader.className += " hidden";
+      });
     </script>
   </body>
 
