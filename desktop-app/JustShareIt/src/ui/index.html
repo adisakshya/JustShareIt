@@ -40,14 +40,8 @@
       <h1>Hello World!</h1>
     </div>
 
-    <script>
-      require('../renderer.js')
-      window.addEventListener("load", async function () {
-          await new Promise(r => setTimeout(r, 3500));
-          const loader = document.querySelector(".loader");
-          loader.className += " hidden";
-      });
-    </script>
+    <script src="../assets/javascripts/loader.js"></script>
+    <script src="../assets/javascripts/render.js"></script>
   </body>
 
   </html>
