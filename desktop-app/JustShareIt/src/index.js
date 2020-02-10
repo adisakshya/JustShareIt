@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, screen } = require('electron');
 const path = require('path');
 
 /**
@@ -22,14 +22,18 @@ let mainWindow;
 const createWindow = () => {
 
   /* Create the browser window */
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: width,
+    height: height,
     frame: false,
     webPreferences: {
       nodeIntegration: true
     }
   });
+
+  /* MAximize window */
+  mainWindow.maximize();
 
   /* Load the index page of the app */
   mainWindow.loadFile(path.join(__dirname, './ui/index.html'));
