@@ -27,7 +27,7 @@ body {
 }
 
 #titlebar {
-  background-color: #1A2933;
+  background-color: #FFF;
   display: block;
   position: fixed;
   height: 32px;
@@ -57,7 +57,7 @@ body {
 }
 
 #titlebar {
-  color: #FFF;
+  color: #000;
 }
 
 #titlebar #drag-region {
@@ -115,11 +115,11 @@ body {
 }
 
 #window-controls .button:hover {
-  background: rgba(255,255,255,0.1);
+  background: #C0C0C0;
 }
 
 #window-controls .button:active {
-  background: rgba(255,255,255,0.2);
+  background: #C0C0C0;
 }
 
 #close-button:hover {
@@ -151,4 +151,21 @@ body {
 
 .maximized #max-button {
   display: none;
+}
+
+/* Logo */
+#logo {
+  position:relative;
+  height: 100%;
+  width:100%;
+}
+
+#logo img {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  border-radius: 50%;
 }
