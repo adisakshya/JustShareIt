@@ -2,11 +2,19 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 /**
- * Handle creating/removing shortcuts on Windows when installing/uninstalling
+ * Handle creating/removing shortcuts on Windows when
+ * installing/uninstalling
  */
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+
+/**
+ * Keep a global reference of the window object, if you don't,
+ * the window will be closed automatically when the JavaScript object
+ * is garbage collected
+ */
+let mainWindow;
 
 /**
  * Create main window
@@ -14,13 +22,27 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
 
   /* Create the browser window */
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   /* Load the index page of the app */
   mainWindow.loadFile(path.join(__dirname, './ui/index.html'));
+
+  /* Emitted when the window is closed */
+  mainWindow.on('closed', () => {
+    /**
+     * Dereference the window object, usually you would store windows
+     * in an array if your app supports multi windows, this is the time
+     * when you should delete the corresponding element.
+     */
+    mainWindow = null;
+  });
 
 };
 
