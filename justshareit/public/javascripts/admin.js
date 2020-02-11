@@ -1,7 +1,9 @@
 (function() {
 
     /* Connect using socket */
-	const socket = io().connect();
+    const socket = io().connect();
+    
+    let files = {};
 
     /* Emit create */
     socket.emit('create');
@@ -28,17 +30,17 @@
 	}
 
     /* Parse Uploaded File */
-    function parseFile(file, callback) {
+    function parseFile(file, offSet, callback) {
         var fileSize   = file.size;
-        var chunkSize  = 64 * 1024; // bytes
-        var offset     = 0;
+        var chunkSize  = 20000 * 1024; // bytes
+        var offset     = offSet;
         var chunkReaderBlock = null;
         
         /* Read File */
         var readEventHandler = function(evt) {
             if (evt.target.error == null && evt.target.result.byteLength) {
                 offset += evt.target.result.byteLength;
-                callback(evt.target.result, file.name, file.type, file.size); // callback for handling read chunk
+                callback(evt.target.result, file.name, file.type, file.size, offset); // callback for handling read chunk
             } else {
                 console.log("Read error: " + evt.target.error);
                 return;
@@ -49,7 +51,7 @@
             }
 
             /* Read next chunk */
-            chunkReaderBlock(offset, chunkSize, file);
+            // chunkReaderBlock(offset, chunkSize, file);
         }
 
         /* Read Chunk */
@@ -80,8 +82,13 @@
 		
 		// Process all File objects
 		for(let i=0; i<e.target.files.length; i++) {
-			let file = e.target.files[i];
-			parseFile(file, function (data, filename, filetype, filesize) {
+            let file = e.target.files[i];
+            
+            if(!files[file.name]) {
+                files[file.name] = file
+            }
+
+			parseFile(file, 0, function (data, filename, filetype, filesize, newOffSet) {
 		
 				/* send slice to socket server */
 				socket.emit('slice', {
@@ -89,14 +96,36 @@
 					type: filetype, 
 					size: filesize, 
 					data: data,
-					currentSize: data.byteLength
+                    currentSize: data.byteLength,
+                    offset: newOffSet
 				});
 			
 			});
             /* Add file to dashboard */
 			parseOutput(file.name, file.size);
 		}
-	}
+    }
+    
+    socket.on('request slice', function(filename, offset) {
+        
+        console.log("Slice Requested with offset " + offset.toString());
+
+        parseFile(files[filename], offset, function (data, filename, filetype, filesize, newOffSet) {
+		
+            /* send slice to socket server */
+            socket.emit('slice', {
+                name: filename,
+                type: filetype, 
+                size: filesize, 
+                data: data,
+                currentSize: data.byteLength,
+                offset: newOffSet
+            });
+            // console.log("Slice Emitted with offset " + newOffSet.toString());
+            console.log("Size " + filesize.toString() + " offset " + offset.toString());
+        
+        });
+    });
 
     /* Add file description to dashboard */
 	function parseOutput(filename, filesize) {

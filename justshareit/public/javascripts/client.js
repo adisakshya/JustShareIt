@@ -96,6 +96,11 @@
 
             document.getElementById("files").innerHTML = parseInt(document.getElementById("files").innerHTML)+1;
             
+            if(files[data.name].size >= 1000000000) {
+                alert("File size to big to handle by your browser!");
+                return;
+            }
+
             /* Download File */
             var link=document.createElement('a');
             link.href=window.URL.createObjectURL(file);
