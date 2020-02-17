@@ -42,7 +42,7 @@ app.use(function(err, req, res, next) {
 /* Socket Setup */
 const io = socket();
 app.io = io;
-var sock = require('./utils/socket');
+var sock = require('./lib/socket');
 sock.start(io);
 
 module.exports = app;
