@@ -1,31 +1,31 @@
 (function() {
     
+    /* File Container */
     let files = {};
     
     /* Connect using socket */
     var socket = io().connect();
     socket.on('connect', function () {
         socket
+            /**
+             * Authenticate Connection Request
+             */
             .emit('authenticate', {token: adminToken})
+            /**
+             * If connection is authenticated then start event-based communication
+             */
             .on('authenticated', function () {
-                console.log('authenticated');
                 /* Emit create */
                 socket.emit('create');
-
                 /* Send request to get files list */
                 socket.emit('get files');
-
                 /* Alert message when file has already been transfered */
                 socket.on('already transfered', function () {
                     alert("File already transfered!");
                 });
-
+                /* Send next requested slice */
                 socket.on('request slice', function(filename, offset) {
-        
-                    console.log("Slice Requested with offset " + offset.toString());
-            
                     parseFile(files[filename], offset, function (data, filename, filetype, filesize, newOffSet) {
-                    
                         /* send slice to socket server */
                         socket.emit('slice', {
                             name: filename,
@@ -35,12 +35,8 @@
                             currentSize: data.byteLength,
                             offset: newOffSet
                         });
-                        // console.log("Slice Emitted with offset " + newOffSet.toString());
-                        console.log("Size " + filesize.toString() + " offset " + offset.toString());
-                    
                     });
                 });
-
                 /* On receiving shared file list display them on dashboard */
                 socket.on('shared files', function (files) {
                     for(var file in files) {
@@ -179,6 +175,9 @@
                     document.getElementById('file-drag').style.display = 'none';
                 }
             })
+            /**
+             * If connection is unauthorized then redirect to client login
+             */
             .on('unauthorized', (msg) => {
                 alert('Your are not authorized to access this page');
                 window.location.href = '/';

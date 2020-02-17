@@ -14,7 +14,13 @@
     var socket = io().connect();
     socket.on('connect', () => {
         socket
+            /**
+             * Authenticate Connection Request
+             */
             .emit('authenticate', { token: sessionStorage.getItem("SessionToken") })
+            /**
+             * If connection is authenticated then start event-based communication
+             */
             .on('authenticated', () => {
                 /* Emit create */
                 socket.emit('create');
@@ -112,6 +118,9 @@
                     }
                 });
             })
+            /**
+             * If connection is unauthorized then redirect to client login
+             */
             .on('unauthorized', (msg) => {
                 sessionStorage.removeItem("SessionName")
                 sessionStorage.removeItem("SessionToken")
