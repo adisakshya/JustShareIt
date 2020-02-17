@@ -248,7 +248,18 @@ const clientIndex = (req, res) => {
  * @param {object} res 
  */
 const adminIndex = (req, res) => {
-    res.render('admin', { "users": users.getUserList() });
+    Object.keys(ifaces).forEach(function (ifname) {
+      if(ifname === 'Wi-Fi') {
+        ifaces[ifname].forEach(function (iface) {
+          if ('IPv4' !== iface.family || iface.internal !== false) {
+            return;
+          }
+          var ip = iface.address;
+          var jwtToken = jwt.sign({'ip': ip}, 'JUSTSHAREIT_ADMIN_SECRET_KEY');
+          res.render('admin', { "users": users.getUserList(), "token": jwtToken });
+        });
+      }
+    });
 };
 
 /**

@@ -56,11 +56,13 @@ $("#request_form").on("submit", function () {
                 /* On no success erase username from session & redirect to login */
                 if (!response.success && response.error) {
                     sessionStorage.removeItem("SessionName");
+                    sessionStorage.removeItem("SessionToken");
                     window.location.href = '/';
                 }
 
                 /* On success redirect to client-index */
                 if(response.success && !response.error && response.message.verified && response.message.token) {
+                    sessionStorage.SessionToken = response.message.token;
                     var html = '<form action="/client" method="post"><input type="text" name="username" value="' + response.message.username + '" hidden /><input type="text" name="token" value="' + response.message.token + '" hidden /><input id="index-form" type="submit" class="btn btn-success" value="Request Approved"></form>'
                     html = $.parseHTML(html);
                     $("#request-section").html(html);
