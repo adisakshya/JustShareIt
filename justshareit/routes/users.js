@@ -11,18 +11,6 @@ router.route('/')
 router.route('/request')
   .post(controller.userRequests);
 
-/* List of users */
-router.route('/users')
-  .post(controller.usersList);
-
-/* Approve request for a user */
-router.route('/approve')
-  .post(controller.approveUser);
-
-/* Reject request for a user */
-router.route('/reject')
-  .post(controller.rejectUser);
-
 /* Verify access for a user */
 router.route('/verify')
   .post(controller.verifyUser);
@@ -30,10 +18,6 @@ router.route('/verify')
 /* Client index page */
 router.route('/client')
   .post(controller.clientIndex);
-
-/* Admin Index Page */
-router.route('/admin')
-  .get(controller.adminIndex);
 
 /* QR Code */
 router.route('/qr')

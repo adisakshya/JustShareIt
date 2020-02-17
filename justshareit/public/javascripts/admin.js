@@ -183,7 +183,7 @@ function approveVisiter(visiterName) {
       "async": false,
       "crossDomain": true,
       "method": "POST",
-      "url": "/approve",
+      "url": "/JustShareIt/admin/approve",
       "data": {"username": visiterName},
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -205,7 +205,7 @@ function rejectVisiter(visiterName, token) {
       "async": false,
       "crossDomain": true,
       "method": "POST",
-      "url": "/reject",
+      "url": "/JustShareIt/admin/reject",
       "data": {"username": visiterName},
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded",
