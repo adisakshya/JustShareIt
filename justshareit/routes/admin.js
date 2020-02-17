@@ -5,15 +5,15 @@ const auth = require('../middleware/adminAuth');
 
 /* List of users */
 router.route('/users')
-  .post(controller.usersList);
+  .post(auth, controller.usersList);
 
 /* Approve request for a user */
 router.route('/approve')
-  .post(controller.approveUser);
+  .post(auth, controller.approveUser);
 
 /* Reject request for a user */
 router.route('/reject')
-  .post(controller.rejectUser);
+  .post(auth, controller.rejectUser);
 
 /* Admin Index Page */
 router.route('/')
