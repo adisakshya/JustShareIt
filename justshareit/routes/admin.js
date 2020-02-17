@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/controller');
+const auth = require('../middleware/adminAuth');
 
 /* List of users */
 router.route('/users')
@@ -16,6 +17,6 @@ router.route('/reject')
 
 /* Admin Index Page */
 router.route('/')
-  .get(controller.adminIndex);
+  .get(auth, controller.adminIndex);
 
 module.exports = router
