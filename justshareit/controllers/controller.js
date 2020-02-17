@@ -124,7 +124,7 @@ const approveUser = (req, res) => {
         return;
       } else {
         /* sending the profile in the token */
-        var jwtToken = jwt.sign(profile, 'SECRET_KEY');
+        var jwtToken = jwt.sign(profile, 'JUSTSHAREIT_ADMIN_SECRET_KEY');
         /* ADD user token */
         users.updateRequest(profile.username, jwtToken)
         res.send("User Approved.");
@@ -220,9 +220,8 @@ const verifyUser = (req, res) => {
  * @param {object} res 
  */
 const clientIndex = (req, res) => {
-    /* Get token */
+    /* Get Username */
     var username = req.body.username;
-    var token = req.body.token;
     
     /* Check if username provided */
     if(!username) {
@@ -232,11 +231,6 @@ const clientIndex = (req, res) => {
         "message": "Please provide a username!"
       });
       return;
-    }
-    
-    /* Check if token supplied */
-    if(!token) {
-      res.send("Token Not Found");
     }
 
     /* If user is verified then render client page */

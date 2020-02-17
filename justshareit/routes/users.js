@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/controller');
+const auth = require('../middleware/auth')
 
 /* Login route */
 router.route('/')
@@ -17,7 +18,7 @@ router.route('/verify')
 
 /* Client index page */
 router.route('/client')
-  .post(controller.clientIndex);
+  .post(auth, controller.clientIndex);
 
 /* QR Code */
 router.route('/qr')
