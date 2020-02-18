@@ -115,6 +115,7 @@
                         link.href=window.URL.createObjectURL(file);
                         link.download=files[data.name].name;
                         link.click();        
+                        delete files[data.name];
                     }
                 });
             })

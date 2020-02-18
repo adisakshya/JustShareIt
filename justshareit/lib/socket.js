@@ -38,6 +38,8 @@ module.exports = {
                     }
                     /* Forward slice to client */
                     socket.broadcast.emit('send slice', data);
+                    /* Delay of 1 second */
+                    setTimeout(function () {}, 1000);
                     /* Request next slice */
                     socket.emit('request slice', data.name, data.offset);
                 });
