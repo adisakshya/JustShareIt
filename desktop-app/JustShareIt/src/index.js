@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen } = require('electron');
+const { app, BrowserView, BrowserWindow, screen } = require('electron');
 const path = require('path');
 
 /**
@@ -22,10 +22,10 @@ let mainWindow;
 const createWindow = () => {
 
   /* Create the browser window */
-  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  // const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   mainWindow = new BrowserWindow({
-    width: width,
-    height: height,
+    width: 500,
+    height: 500,
     frame: false,
     webPreferences: {
       nodeIntegration: true
@@ -33,7 +33,7 @@ const createWindow = () => {
   });
 
   /* MAximize window */
-  mainWindow.maximize();
+  // mainWindow.maximize();
 
   /* Load the index page of the app */
   mainWindow.loadFile(path.join(__dirname, './ui/index.html'));
@@ -47,6 +47,18 @@ const createWindow = () => {
      */
     mainWindow = null;
   });
+
+  let child = new BrowserWindow({
+    width: 500,
+    height: 400,
+    x: 2*mainWindow.getPosition()[0],
+    y: mainWindow.getPosition()[1],
+    webPreferences: {
+      nodeIntegration: true
+    },
+    parent: mainWindow
+  })
+  child.show()
 
 };
 
