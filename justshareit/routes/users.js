@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/controller');
+const auth = require('../middleware/auth')
 
 /* Login route */
 router.route('/')
@@ -11,29 +12,13 @@ router.route('/')
 router.route('/request')
   .post(controller.userRequests);
 
-/* List of users */
-router.route('/users')
-  .post(controller.usersList);
-
-/* Approve request for a user */
-router.route('/approve')
-  .post(controller.approveUser);
-
-/* Reject request for a user */
-router.route('/reject')
-  .post(controller.rejectUser);
-
 /* Verify access for a user */
 router.route('/verify')
   .post(controller.verifyUser);
 
 /* Client index page */
 router.route('/client')
-  .post(controller.clientIndex);
-
-/* Admin Index Page */
-router.route('/admin')
-  .get(controller.adminIndex);
+  .post(auth, controller.clientIndex);
 
 /* QR Code */
 router.route('/qr')

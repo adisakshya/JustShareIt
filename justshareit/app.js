@@ -3,10 +3,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const fs = require('fs');
 const socket = require('socket.io');
 
 const usersRouter = require('./routes/users');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', usersRouter);
+app.use('/JustShareIt/admin', adminRouter);
 
 /* catch 404 and forward to error handler */
 app.use(function(req, res, next) {
@@ -38,82 +39,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-/* Sockets Setup */
+/* Socket Setup */
 const io = socket();
 app.io = io;
-
-/* File Structure */
-var files = {}, 
-  struct = { 
-    name: null, 
-    type: null, 
-    size: 0, 
-    data: [], 
-    slice: 0, 
-    currentSize: 0
-  };
-
-/* On Connection */
-io.on('connection', function (socket) {
-
-  /* a new user connected */
-  socket.on("create", function () {
-    console.log("[SOCKET] => a new user connected");
-  });
-
-  /* file slice received from admin */
-  socket.on('slice', function (data) {
-
-    /* if file not already uploaded */
-    if (!files[data.name]) { 
-      files[data.name] = Object.assign({}, struct, data); 
-      files[data.name].data = []; 
-      files[data.name].currentSize = 0;
-    }
-
-    /* if file has already been transfered */
-    if (files[data.name] && files[data.name].currentSize == files[data.name].size && files[data.name].type == data.type) {
-      /* Emit already transfered */
-      socket.emit('already transfered');
-      return;
-    }
-    
-    /* save the data & increment number of slices received */
-    files[data.name].data.push(data.data); 
-    files[data.name].slice++;
-    files[data.name].currentSize += data.currentSize;
-
-    /* complete file is received */
-    if (files[data.name].slice * 100000 >= files[data.name].size) { 
-        // var fileBuffer = Buffer.concat(files[data.name].data);
-        // fs.writeFile('tmp/'+data.name, fileBuffer, (err) => { 
-        //     if (err) console.log('Error:', err); 
-        // });
-
-        /* Emit upload complete */
-        socket.emit('upload complete', data.name);
-    }
-    
-    /* forward slice to client */
-    socket.broadcast.emit('send slice', data);
-
-  });
-
-  /* Admin request list of files shared */
-  socket.on('get files', function () {
-    var filelist = {};
-    for(var file in files) {
-      filelist[file] = files[file].size;
-    }
-    /* Emit shared files information */
-    socket.emit('shared files', filelist);
-  });
-
-  /* on disconnect */
-  socket.on("disconnect", function () {
-    console.log("[SOCKET] => a user disconnected");
-  });
-
-});
+var sock = require('./lib/socket');
+sock.start(io);
 
 module.exports = app;
