@@ -5,14 +5,12 @@
 ## Version 1.1
 
 **New Features**
-
-    - Support for drag & drop file upload
-    - Sharing statistics
-    - Updated user interface
+- Support for drag & drop file upload
+- Sharing statistics
+- Updated user interface
 
 **Improvements**
-    
-    - Connection authentication using JWT
-    - Only admin can access the admin page 
-    - Simplified operation
-    - Docker not required as a prerequisite
+- Connection authentication using JWT
+- Only admin can access the admin page 
+- Simplified operation
+- Docker not required as a prerequisite
