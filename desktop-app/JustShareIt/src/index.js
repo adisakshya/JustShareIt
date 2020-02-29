@@ -1,4 +1,4 @@
-const { app, BrowserView, BrowserWindow, screen } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 /**
@@ -14,31 +14,39 @@ if (require('electron-squirrel-startup')) {
  * the window will be closed automatically when the JavaScript object
  * is garbage collected
  */
-let mainWindow;
+let mainWindow, childWindow;
 
 /**
  * Create main window
  */
 const createWindow = () => {
 
-  /* Create the browser window */
-  // const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  /* Create the main browser window */
   mainWindow = new BrowserWindow({
-    width: 500,
-    height: 500,
+    maxWidth: 500,
+    maxHeight: 500,
     frame: false,
     webPreferences: {
       nodeIntegration: true
     }
   });
 
-  /* MAximize window */
-  // mainWindow.maximize();
+  /* Create the child browser window */
+  childWindow = new BrowserWindow({
+    maxWidth: 500,
+    maxHeight: 400,
+    x: 2*mainWindow.getPosition()[0],
+    y: mainWindow.getPosition()[1],
+    webPreferences: {
+      nodeIntegration: true
+    },
+    parent: mainWindow
+  })
 
   /* Load the index page of the app */
   mainWindow.loadFile(path.join(__dirname, './ui/index.html'));
 
-  /* Emitted when the window is closed */
+  /* Emitted when the main window is closed */
   mainWindow.on('closed', () => {
     /**
      * Dereference the window object, usually you would store windows
@@ -48,17 +56,26 @@ const createWindow = () => {
     mainWindow = null;
   });
 
-  let child = new BrowserWindow({
-    width: 500,
-    height: 400,
-    x: 2*mainWindow.getPosition()[0],
-    y: mainWindow.getPosition()[1],
-    webPreferences: {
-      nodeIntegration: true
-    },
-    parent: mainWindow
-  })
-  child.show()
+  /* Emitted when the child window is closed */
+  childWindow.on('closed', () => {
+    /**
+     * Dereference the window object, usually you would store windows
+     * in an array if your app supports multi windows, this is the time
+     * when you should delete the corresponding element.
+     */
+    childWindow = null;
+  });
+  
+  
+  /* Emitted when the main window is moved */
+  mainWindow.on('move', () => {
+    /**
+     * Get the position of the parent window
+     * and move the child window accordingly.
+     */
+    let positions = mainWindow.getPosition();
+    childWindow.setPosition(mainWindow.getSize()[0] + positions[0], positions[1]);
+  });
 
 };
 
