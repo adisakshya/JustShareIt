@@ -88,6 +88,10 @@ Is a feature you care about currently missing? Make sure to browse the [issue tr
 
 There are multiple ways to contribute to this project, read about them [here](https://github.com/adisakshya/JustShareIt/blob/master/.github/CONTRIBUTING.md).
 
+## JustStarIt
+
+🌟 Star this repo if JustShareIt helped you.
+
 ## License
 
 All versions of the app are open-sourced, read more about this [LICENSE](https://github.com/adisakshya/JustShareIt/blob/master/LICENSE).
