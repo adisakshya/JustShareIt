@@ -14,7 +14,7 @@ var users = new Users();
  * @param {object} res
  */
 const loginIndex = (req, res) => {
-    res.render('login', { requested: false });
+    return res.render('login', { requested: false });
 };
 
 /**
@@ -26,7 +26,7 @@ const loginIndex = (req, res) => {
 const userRequests = (req, res) => {
     /* Check maximum user limit */
     if(users.getTotalUsers() >= USER_LIMIT) {
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "Admin is currently to busy to handle this request! Please try again after sometime."
@@ -40,17 +40,16 @@ const userRequests = (req, res) => {
 
     /* Check if username provided */
     if(!profile.username) {
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "Please provide a username!"
       });
-      return;
     }
 
     /* Check for duplicate username */
     if(users.getUser(profile.username)) {
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "User Already Exists! Please choose another username"
@@ -60,7 +59,7 @@ const userRequests = (req, res) => {
       users.addUser(profile.username);
       
       /* Return response */
-      res.json({
+      return res.json({
         "success": true,
         "error": false,
         "message": {
@@ -77,7 +76,7 @@ const userRequests = (req, res) => {
  */
 const usersList = (req, res) => {
     /* Return Response */
-    res.json({
+    return res.json({
         "success": true,
         "error": false,
         "message": {
@@ -99,35 +98,32 @@ const approveUser = (req, res) => {
   
       /* Check if username provided */
       if(!profile.username) {
-        res.json({
+        return res.json({
           "success": false,
           "error": true,
           "message": "Please provide a username!"
         });
-        return;
       }
   
       /* CHECK if username exist */
       if(users.getRequestStatus(profile.username)) {
-        res.json({
+        return res.json({
           "success": true,
           "error": false,
           "message": "User already approved."
         });
-        return;
       } else if(users.getRequestStatus(profile.username) === -1) {
-        res.json({
+        return res.json({
           "success": false,
           "error": true,
           "message": "Username doesn't exist!"
         });
-        return;
       } else {
         /* sending the profile in the token */
         var jwtToken = jwt.sign(profile, 'JUSTSHAREIT_ADMIN_SECRET_KEY');
         /* ADD user token */
         users.updateRequest(profile.username, jwtToken)
-        res.send("User Approved.");
+        return res.send("User Approved.");
       }
 };
 
@@ -144,18 +140,17 @@ const rejectUser = (req, res) => {
 
     /* Check if username provided */
     if(!profile.username) {
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "Please provide a username!"
       });
-      return;
     }
 
     /* CHECK if username exist */
     if(users.getUser(profile.username)) {
       users.removeUser(profile.username);
-      res.send("User Rejected.");
+      return res.send("User Rejected.");
     }
 };
 
@@ -172,18 +167,17 @@ const verifyUser = (req, res) => {
 
     /* Check if username provided */
     if(!profile.username) {
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "Please provide a username!"
       });
-      return;
     }
 
     /* CHECK if username exist or is already verified */
     if(!users.getUser(profile.username)) {
       /* Username not found */
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "Username not found!"
@@ -192,7 +186,7 @@ const verifyUser = (req, res) => {
     
     if(users.getRequestStatus(profile.username)) {
       /* SEND request token */
-      res.json({
+      return res.json({
         "success": true,
         "error": false,
         "message": {
@@ -201,16 +195,14 @@ const verifyUser = (req, res) => {
           "username": profile.username
         },
       });
-      return;
     } else {
-      res.json({
+      return res.json({
         "success": true,
         "error": false,
         "message": {
           "verified": false
         }
       });
-      return;
     }
 };
 
@@ -225,20 +217,19 @@ const clientIndex = (req, res) => {
     
     /* Check if username provided */
     if(!username) {
-      res.json({
+      return res.json({
         "success": false,
         "error": true,
         "message": "Please provide a username!"
       });
-      return;
     }
 
     /* If user is verified then render client page */
     if(users.getRequestStatus(username)) {
-      res.render('client');
+      return res.render('client');
     } else {
       /* User not verified */
-      res.redirect('/');
+      return res.redirect('/');
     }
 };
 
@@ -256,7 +247,7 @@ const adminIndex = (req, res) => {
           }
           var ip = iface.address;
           var jwtToken = jwt.sign({'ip': ip}, 'JUSTSHAREIT_ADMIN_SECRET_KEY');
-          res.render('admin', { "users": users.getUserList(), "token": jwtToken });
+          return res.render('admin', { "users": users.getUserList(), "token": jwtToken });
         });
       }
     });
