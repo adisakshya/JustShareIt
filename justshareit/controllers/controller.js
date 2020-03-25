@@ -4,7 +4,7 @@ const os = require('os');
 const ifaces = os.networkInterfaces();
 
 /* Temporary User Store */
-const USER_LIMIT = 500000;
+const USER_LIMIT = 1;
 const { Users } = require('../lib/users');
 var users = new Users();
 
