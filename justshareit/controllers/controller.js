@@ -152,6 +152,13 @@ const rejectUser = (req, res) => {
       users.removeUser(profile.username);
       return res.send("User Rejected.");
     }
+    else{
+      return res.json({
+        "success": false,
+        "error": true,
+        "message": "Username doesn't exist!"
+      });
+    }
 };
 
 /**
