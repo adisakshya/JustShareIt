@@ -31,6 +31,10 @@ module.exports = {
                     /* File hasn't been shared yet */
                     if(!files[data.name]) {
                         files[data.name] = data.size;
+                    } else if(data.offset === data.currentSize) {
+                        /* First slice of a file that has already been transfered */
+                        socket.emit('already transfered');
+                        return;
                     }
                     /* File has completely been transfered */
                     if(data.size < data.offset) {
