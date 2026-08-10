@@ -91,7 +91,7 @@
                 /* Parse Uploaded File */
                 function parseFile(file, offSet, callback) {
                     var fileSize   = file.size;
-                    var chunkSize  = parseInt(fileSize * 0.05); // bytes
+                    var chunkSize  = Math.max(1, parseInt(fileSize * 0.05)); // bytes
                     var offset     = offSet;
                     var chunkReaderBlock = null;
                     
