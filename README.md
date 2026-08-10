@@ -72,7 +72,8 @@ NodeJS - Node.js is an open-source, cross-platform, JavaScript runtime environme
 	- In project-directory ```./justshareit```, run the following command
 		- ```npm install```
 - You are all set to get started with JustShareIt, now run the following command to start JustShareIt
-	- ```npm start --host 0.0.0.0```
+	- ```npm start```
+	- The server listens on all network interfaces (`0.0.0.0`) on port `3000` by default, so other devices on your network can reach it right away.
 - Now you have successfully setup JustShareIt,
 	- Go to ```http://<your-ip-address>:3000/JustShareIt/admin``` for the admin dashboard (sender).
 	- Go to ```http://<your-ip-address>:3000``` for the user landing page(receiver).
