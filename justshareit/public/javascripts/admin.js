@@ -204,8 +204,8 @@ function approveVisiter(visiterName) {
       alert("User Approved!");
       /* Reload page */
       location.reload();
-      return false;
     });
+    return false;
 }
 
 /* Reject user request */
@@ -224,6 +224,6 @@ function rejectVisiter(visiterName, token) {
   
     $.ajax(settings).done(function (response) {
       alert("User Rejected!");
-      return false;
     });
+    return false;
 }
