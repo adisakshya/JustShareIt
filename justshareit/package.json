@@ -2,7 +2,7 @@
   "name": "justshareit",
   "version": "1.1.0",
   "description": "File sharing app with fast cross-platform transfer speed, sharing files including photos, videos, music, contacts, apps and any other files, no matter of what size.",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
