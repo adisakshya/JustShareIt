@@ -223,7 +223,7 @@ function rejectVisiter(visiterName, token) {
     }
   
     $.ajax(settings).done(function (response) {
-      alert("User Rejected!");
+      alert(response.success ? "User Rejected!" : response.message);
       return false;
     });
 }
