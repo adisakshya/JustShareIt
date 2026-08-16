@@ -105,18 +105,20 @@ const approveUser = (req, res) => {
         });
       }
   
-      /* CHECK if username exist */
+      /* CHECK if username exists */
+      if(!users.getUser(profile.username)) {
+        return res.json({
+          "success": false,
+          "error": true,
+          "message": "Username doesn't exist!"
+        });
+      }
+
       if(users.getRequestStatus(profile.username)) {
         return res.json({
           "success": true,
           "error": false,
           "message": "User already approved."
-        });
-      } else if(users.getRequestStatus(profile.username) === -1) {
-        return res.json({
-          "success": false,
-          "error": true,
-          "message": "Username doesn't exist!"
         });
       } else {
         /* sending the profile in the token */
