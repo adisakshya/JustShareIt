@@ -118,12 +118,12 @@
                           </p>
                         </span>
                       <% } else{ %>
-                        <form onsubmit="rejectVisiter('<%= user %>')" style="float:right;">
+                        <form onsubmit="return rejectVisiter('<%= user %>')" style="float:right;">
                           <button type="submit" class="btn btn-danger">
                             Reject
                           </button>
                         </form>
-                        <form onsubmit="approveVisiter('<%= user %>')" style="float:right;margin-right: 2%;">
+                        <form onsubmit="return approveVisiter('<%= user %>')" style="float:right;margin-right: 2%;">
                           <button type="submit" class="btn btn-success">
                             Approve
                           </button>
