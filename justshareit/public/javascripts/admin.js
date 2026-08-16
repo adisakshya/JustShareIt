@@ -223,7 +223,12 @@ function rejectVisiter(visiterName, token) {
     }
   
     $.ajax(settings).done(function (response) {
-      alert("User Rejected!");
+      if (response.success === true) {
+        alert("User Rejected!");
+        location.reload();
+      } else {
+        alert(response.message || "Rejection failed!");
+      }
       return false;
     });
 }
