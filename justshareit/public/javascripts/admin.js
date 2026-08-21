@@ -186,6 +186,27 @@
 
 })();
 
+/*
+ * Report what the server actually did.
+ *
+ * The admin endpoints answer a success with a plain string ("User Approved.")
+ * and everything else with JSON carrying success/error/message. So `success` is
+ * undefined on the successful path and cannot be tested for directly — reading
+ * it as a boolean would report failure on every successful call. A JSON body is
+ * authoritative; a string means the plain success path was taken.
+ *
+ * Returns whether the request actually succeeded, so callers can decide whether
+ * to act on it.
+ */
+function reportOutcome(response, successMessage) {
+    if (response && typeof response === 'object' && response.message) {
+        alert(response.message);
+        return response.success === true;
+    }
+    alert(successMessage);
+    return true;
+}
+
 /* Approve user request */
 function approveVisiter(visiterName) {
     var settings = {
@@ -201,9 +222,12 @@ function approveVisiter(visiterName) {
     }
   
     $.ajax(settings).done(function (response) {
-      alert("User Approved!");
-      /* Reload page */
-      location.reload();
+      /* Only reload once the user is actually approved — reloading on a failure
+         redraws the same pending request with no explanation. */
+      if (reportOutcome(response, "User Approved!")) {
+        /* Reload page */
+        location.reload();
+      }
     });
     return false;
 }
@@ -223,7 +247,7 @@ function rejectVisiter(visiterName, token) {
     }
   
     $.ajax(settings).done(function (response) {
-      alert("User Rejected!");
+      reportOutcome(response, "User Rejected!");
     });
     return false;
 }
