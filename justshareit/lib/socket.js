@@ -36,8 +36,8 @@ module.exports = {
                         socket.emit('already transfered');
                         return;
                     }
-                    /* File has completely been transfered */
-                    if(data.size < data.offset) {
+                    /* File has completely been transfered (offset is end of last slice) */
+                    if(data.size <= data.offset) {
                         return;
                     }
                     /* Forward slice to client */
