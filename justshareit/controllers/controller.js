@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const qr = require('qr-image');  
-const os = require('os');
-const ifaces = os.networkInterfaces();
+const { localIPv4Address } = require('../lib/network');
 
 /* Temporary User Store */
 const USER_LIMIT = 1;
@@ -248,18 +247,12 @@ const clientIndex = (req, res) => {
  * @param {object} res 
  */
 const adminIndex = (req, res) => {
-    Object.keys(ifaces).forEach(function (ifname) {
-      if(ifname === 'Wi-Fi') {
-        ifaces[ifname].forEach(function (iface) {
-          if ('IPv4' !== iface.family || iface.internal !== false) {
-            return;
-          }
-          var ip = iface.address;
-          var jwtToken = jwt.sign({'ip': ip}, 'JUSTSHAREIT_ADMIN_SECRET_KEY');
-          return res.render('admin', { "users": users.getUserList(), "token": jwtToken });
-        });
-      }
-    });
+    var ip = localIPv4Address();
+    if (!ip) {
+      return res.render('error', { 'message': 'No network connection found — connect this machine to a network and reload.' });
+    }
+    var jwtToken = jwt.sign({'ip': ip}, 'JUSTSHAREIT_ADMIN_SECRET_KEY');
+    return res.render('admin', { "users": users.getUserList(), "token": jwtToken });
 };
 
 /**
@@ -268,19 +261,13 @@ const adminIndex = (req, res) => {
  * @param {object} res 
  */
 const qrCode = (req, res) => {
-    Object.keys(ifaces).forEach(function (ifname) {
-        if(ifname === 'Wi-Fi') {
-          ifaces[ifname].forEach(function (iface) {
-            if ('IPv4' !== iface.family || iface.internal !== false) {
-              return;
-            }
-            var code = qr.image(new URL('http://'+iface.address+':3000').toString(), { type: 'svg' });
-            res.type('svg');
-            code.pipe(res);
-          });
-          return;
-        }
-      });
+    var ip = localIPv4Address();
+    if (!ip) {
+      return res.render('error', { 'message': 'No network connection found — connect this machine to a network and reload.' });
+    }
+    var code = qr.image(new URL('http://'+ip+':3000').toString(), { type: 'svg' });
+    res.type('svg');
+    return code.pipe(res);
 };
 
 exports.loginIndex = loginIndex;
