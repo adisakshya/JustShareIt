@@ -28,20 +28,31 @@ module.exports = {
                 });
                 /* file slice received from admin */
                 socket.on('slice', function (data) {
-                    /* File hasn't been shared yet */
-                    if(!files[data.name]) {
-                        files[data.name] = data.size;
-                    } else if(data.offset === data.currentSize) {
-                        /* First slice of a file that has already been transfered */
+                    /*
+                     * `offset` counts the bytes read so far, so on the opening slice of
+                     * a file it is equal to that slice's own length.
+                     */
+                    const isFirstSlice = data.offset === data.currentSize;
+                    /*
+                     * Re-uploading a file that actually finished sending. `files` only
+                     * records completed transfers, so an interrupted one leaves no entry
+                     * and can be retried under the same name.
+                     */
+                    if(isFirstSlice && files[data.name]) {
                         socket.emit('already transfered');
-                        return;
-                    }
-                    /* File has completely been transfered */
-                    if(data.size < data.offset) {
                         return;
                     }
                     /* Forward slice to client */
                     socket.broadcast.emit('send slice', data);
+                    /*
+                     * File has completely been transfered. Recorded here rather than on
+                     * the first slice, and checked after the broadcast rather than
+                     * before it: the closing slice still has to reach the client.
+                     */
+                    if(data.offset >= data.size) {
+                        files[data.name] = data.size;
+                        return;
+                    }
                     /* Delay of 1 second */
                     setTimeout(function () {
                         /* Request next slice */
